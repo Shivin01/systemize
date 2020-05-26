@@ -5,3 +5,6 @@ public
 config
 .idea/*
 .vscode/*
+src/index.css
+tailwind.js
+postcss.config.js

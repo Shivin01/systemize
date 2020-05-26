@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth.decorators import login_required
+from django.views.generic import TemplateView
+from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^frontend/',
+        login_required(TemplateView.as_view(template_name="frontend.html")), name='frontend'),
 ]

@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "classnames": "^2.2.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"
@@ -15,7 +16,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src -c .eslintrc --ext js,jsx",
+    "check-staged": "lint-staged",
+    "format": "prettier --write \"**/*.+(js|css|md|mdx|html)\""
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -34,7 +38,22 @@
   },
   "devDependencies": {
     "autoprefixer": "^9.8.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.6",
     "postcss-cli": "^7.1.1",
     "tailwindcss": "^1.4.6"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run check-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --ignore src/setupTests.js .storybook/*"
+    ],
+    "*.{js,jsx,json,md,css,mdx,html}": [
+      "npm run format"
+    ]
   }
 }

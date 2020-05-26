@@ -45,7 +45,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run check-staged"
+      "pre-commit": "python3 --version"
     }
   },
   "lint-staged": {

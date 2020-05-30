@@ -55,11 +55,11 @@
     }
   },
   "lint-staged": {
-    "*.{js,jsx}": [
-      "eslint src/*"
-    ],
     "*.{js,jsx,json,md,css,mdx,html}": [
       "npm run format"
+    ],
+    "*.{js,jsx}": [
+      "eslint src/*"
     ]
   }
 }

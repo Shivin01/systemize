@@ -21,6 +21,4 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^frontend/',
-        login_required(TemplateView.as_view(template_name="frontend.html")), name='frontend'),
 ]

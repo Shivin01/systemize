@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'webpack_loader',
 ]
 
 MIDDLEWARE = [
@@ -80,19 +79,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        'CACHE': not DEBUG,
-        'BUNDLE_DIR_NAME': 'bundles/', # must end with slash
-        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.dev.json'),
-        'POLL_INTERVAL': 0.1,
-        'TIMEOUT': None,
-        'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],
-        'LOADER_CLASS': 'webpack_loader.loader.WebpackLoader',
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

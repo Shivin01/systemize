@@ -10,7 +10,7 @@
       }
     ],
     "prettier/prettier": "error",
-    "max-len": ["error", 80],
+    "max-len": "off",
     "react/jsx-props-no-spreading": "off",
     "import/no-extraneous-dependencies": "off",
     "import/no-named-as-default": "off",

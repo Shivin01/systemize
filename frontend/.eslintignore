@@ -5,3 +5,4 @@ dist/*
 src/index.css
 tailwind.js
 postcss.config.js
+src/tailwind.css

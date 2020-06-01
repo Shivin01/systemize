@@ -1,0 +1,11 @@
+node_modules
+dist
+coverage
+public
+config
+.idea/*
+.vscode/*
+src/index.css
+tailwind.js
+postcss.config.js
+src/tailwind.css

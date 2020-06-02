@@ -1,6 +1,4 @@
 from django.db import models
-from django.contrib.postgres.fields import HStoreField
-
 from user.models import UserProfile, Organization
 
 
@@ -11,6 +9,8 @@ class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        abstract = True
 
 # # TODO we can remove this
 # class Project(BaseModel):
@@ -95,8 +95,6 @@ class TaskInfo(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='task_info')
 
 
-
-
 class Comment(BaseModel):
     """
     Comment model
@@ -104,7 +102,7 @@ class Comment(BaseModel):
     text = models.TextField(max_length=200)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE,
                              related_name='comments')
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='comments')
 
     def __str__(self):
         return self.id

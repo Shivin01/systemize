@@ -5,14 +5,14 @@ import Logo from '../images/Logo.svg'
 import BackgroundShape from '../images/Shape.svg'
 import Image from '../images/image.svg'
 
-function Login() {
+function Signup() {
   return (
     <div className="flex items-center justify-center h-screen text-gray-700">
       <div className="sm:w-9/12 md:w-8/12 font-bold rounded-lg border shadow-xl">
         <div className="flex">
           <div className="w-1/2 h-auto rounded-tl-lg rounded-bl-lg p-8">
             <div className="flex justify-between items-center">
-              <a className="no-underline" href="#fsdf">
+              <a className="no-underline" href="#sdfsdf">
                 <img src={Logo} alt="logo" />
               </a>
               <nav>
@@ -20,7 +20,7 @@ function Login() {
                   <li className="inline-block py-0 px-5">
                     <a
                       className="font-bold"
-                      href="#fdsf"
+                      href="#fdsfsdf"
                       css={css`
                         transition: all 0.3s ease 0s;
                         &:hover {
@@ -34,7 +34,7 @@ function Login() {
                   <li className="inline-block py-0 px-5">
                     <a
                       className="font-bold"
-                      href="#sdfdsf"
+                      href="#dsfdsf"
                       css={css`
                         transition: all 0.3s ease 0s;
                         &:hover {
@@ -49,7 +49,7 @@ function Login() {
               </nav>
             </div>
             <div className="mt-16 w-full">
-              <span className="uppercase text-2xl">Signin</span>
+              <span className="uppercase text-2xl">Signup</span>
               <form className="pt-6 pb-8 mb-4">
                 <div className="mb-4">
                   <label
@@ -65,6 +65,48 @@ function Login() {
                     placeholder="Username"
                   />
                 </div>
+                <div className="mb-4">
+                  <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="email"
+                  >
+                    Email
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="email"
+                    type="email"
+                    placeholder="Email"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="first-name"
+                  >
+                    First Name
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="first-name"
+                    type="text"
+                    placeholder="First Name"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="last-name"
+                  >
+                    First Name
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="last-name"
+                    type="text"
+                    placeholder="Last Name"
+                  />
+                </div>
                 <div className="mb-6">
                   <label
                     className="block text-gray-700 text-sm font-bold mb-2"
@@ -78,9 +120,20 @@ function Login() {
                     type="password"
                     placeholder="******************"
                   />
-                  <p className="text-red-500 text-xs italic">
-                    Please choose a password.
-                  </p>
+                </div>
+                <div className="mb-6">
+                  <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="password"
+                  >
+                    Confirm Password
+                  </label>
+                  <input
+                    className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                    id="password"
+                    type="password"
+                    placeholder="******************"
+                  />
                 </div>
                 <div className="flex items-center justify-between">
                   <button
@@ -95,14 +148,8 @@ function Login() {
                       box-shadow: 0px 15px 20px rgba(32, 175, 221, 0.34);
                     `}
                   >
-                    Sign In
+                    Sign Up
                   </button>
-                  <a
-                    className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-                    href="#fdsfd"
-                  >
-                    Forgot Password?
-                  </a>
                 </div>
               </form>
             </div>
@@ -150,4 +197,4 @@ function Login() {
   )
 }
 
-export default Login
+export default Signup

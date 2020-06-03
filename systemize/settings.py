@@ -38,6 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
+    'django.contrib.sites',
+    'rest_auth',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
     'task',
     'user',
 ]
@@ -53,6 +59,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'systemize.urls'
+
+AUTH_USER_MODEL = 'user.User'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 TEMPLATES = [
     {
@@ -139,3 +149,5 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+SITE_ID = 1

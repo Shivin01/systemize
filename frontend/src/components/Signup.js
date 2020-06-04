@@ -4,6 +4,7 @@ import {jsx, css} from '@emotion/core'
 import Logo from '../images/Logo.svg'
 import BackgroundShape from '../images/Shape.svg'
 import Image from '../images/image.svg'
+import SignupForm from "./SignupForm";
 
 function Signup() {
   return (
@@ -50,108 +51,23 @@ function Signup() {
             </div>
             <div className="mt-16 w-full">
               <span className="uppercase text-2xl">Signup</span>
-              <form className="pt-6 pb-8 mb-4">
-                <div className="mb-4">
-                  <label
-                    className="block text-gray-700 text-sm font-bold mb-2"
-                    htmlFor="username"
-                  >
-                    Username
-                  </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="username"
-                    type="text"
-                    placeholder="Username"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label
-                    className="block text-gray-700 text-sm font-bold mb-2"
-                    htmlFor="email"
-                  >
-                    Email
-                  </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="email"
-                    type="email"
-                    placeholder="Email"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label
-                    className="block text-gray-700 text-sm font-bold mb-2"
-                    htmlFor="first-name"
-                  >
-                    First Name
-                  </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="first-name"
-                    type="text"
-                    placeholder="First Name"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label
-                    className="block text-gray-700 text-sm font-bold mb-2"
-                    htmlFor="last-name"
-                  >
-                    First Name
-                  </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="last-name"
-                    type="text"
-                    placeholder="Last Name"
-                  />
-                </div>
-                <div className="mb-6">
-                  <label
-                    className="block text-gray-700 text-sm font-bold mb-2"
-                    htmlFor="password"
-                  >
-                    Password
-                  </label>
-                  <input
-                    className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                    id="password"
-                    type="password"
-                    placeholder="******************"
-                  />
-                </div>
-                <div className="mb-6">
-                  <label
-                    className="block text-gray-700 text-sm font-bold mb-2"
-                    htmlFor="password"
-                  >
-                    Confirm Password
-                  </label>
-                  <input
-                    className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                    id="password"
-                    type="password"
-                    placeholder="******************"
-                  />
-                </div>
-                <div className="flex items-center justify-between">
-                  <button
-                    className="text-white font-bold py-2 px-8 rounded-lg focus:outline-none focus:shadow-outline"
-                    type="button"
-                    css={css`
-                      background: linear-gradient(
-                        264.33deg,
-                        #7ee0ef 0%,
-                        #15aad9 100%
-                      );
-                      box-shadow: 0px 15px 20px rgba(32, 175, 221, 0.34);
-                    `}
-                  >
-                    Sign Up
-                  </button>
-                </div>
-              </form>
+                <SignupForm />
+                {/*<div className="flex items-center justify-between">*/}
+                {/*  <button*/}
+                {/*    className="text-white font-bold py-2 px-8 rounded-lg focus:outline-none focus:shadow-outline"*/}
+                {/*    type="button"*/}
+                {/*    css={css`*/}
+                {/*      background: linear-gradient(*/}
+                {/*        264.33deg,*/}
+                {/*        #7ee0ef 0%,*/}
+                {/*        #15aad9 100%*/}
+                {/*      );*/}
+                {/*      box-shadow: 0px 15px 20px rgba(32, 175, 221, 0.34);*/}
+                {/*    `}*/}
+                {/*  >*/}
+                {/*    Sign Up*/}
+                {/*  </button>*/}
+                {/*</div>*/}
             </div>
           </div>
           <div

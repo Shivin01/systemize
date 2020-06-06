@@ -1,48 +1,47 @@
-import React from 'react';
-import { Formik } from 'formik';
-import {css} from "@emotion/core";
+import React from 'react'
+import {Formik} from 'formik'
+import {css} from '@emotion/core'
 
 const SignupForm = () => (
   <div>
     <Formik
-      initialValues={
-        {
-          email: '',
-          password: '',
-          confirmPassword: '',
-          userName: '',
-          firstName: '',
-          lastName: ''
-        }
-      }
+      initialValues={{
+        email: '',
+        password: '',
+        confirmPassword: '',
+        userName: '',
+        firstName: '',
+        lastName: '',
+      }}
       validate={values => {
-        const errors = {};
+        const errors = {}
         if (!values.email) {
-          errors.email = 'Required';
+          errors.email = 'Required'
         } else if (
           !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
         ) {
-          errors.email = 'Invalid email address';
+          errors.email = 'Invalid email address'
         }
-        return errors;
+        return errors
       }}
-      onSubmit={(values, { setSubmitting }) => {
+      onSubmit={(values, {setSubmitting}) => {
         setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
+          console.log(values)
+          // alert(JSON.stringify(values, null, 2))
+          setSubmitting(false)
+        }, 400)
       }}
     >
       {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-          /* and other goodies */
-        }) => (
+        values,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        isSubmitting,
+        /* and other goodies */
+      }) => (
         <form onSubmit={handleSubmit} className="pt-6 pb-8 mb-4">
           <div className="mb-4">
             <label
@@ -65,20 +64,21 @@ const SignupForm = () => (
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="email">
+              htmlFor="email"
+            >
               Email
             </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="email"
-                placeholder="email"
-                type="email"
-                name="email"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.email}
-              />
-              {errors.email && touched.email && errors.email}
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="email"
+              placeholder="email"
+              type="email"
+              name="email"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.email}
+            />
+            {errors.email && touched.email && errors.email}
           </div>
           <div className="mb-4">
             <label
@@ -134,7 +134,7 @@ const SignupForm = () => (
               value={values.password}
             />
             {errors.password && touched.password && errors.password}
-            </div>
+          </div>
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -152,28 +152,31 @@ const SignupForm = () => (
               onBlur={handleBlur}
               value={values.confirmPassword}
             />
-            {errors.confirmPassword && touched.confirmPassword && errors.confirmPassword}
+            {errors.confirmPassword &&
+              touched.confirmPassword &&
+              errors.confirmPassword}
           </div>
           <div className="flex items-center justify-between">
-          <button
-            className="text-white font-bold py-2 px-8 rounded-lg focus:outline-none focus:shadow-outline"
-            type="button"
-            css={css`
+            <button
+              className="text-white font-bold py-2 px-8 rounded-lg focus:outline-none focus:shadow-outline"
+              type="button"
+              css={css`
                 background: linear-gradient(
                   264.33deg,
                   #7ee0ef 0%,
                   #15aad9 100%
-                  );
-                  box-shadow: 0px 15px 20px rgba(32, 175, 221, 0.34);
-                `}
-              disabled={isSubmitting}>
-            Submit
-          </button>
+                );
+                box-shadow: 0px 15px 20px rgba(32, 175, 221, 0.34);
+              `}
+              disabled={isSubmitting}
+            >
+              Submit
+            </button>
           </div>
         </form>
       )}
     </Formik>
   </div>
-);
+)
 
-export default SignupForm;
+export default SignupForm

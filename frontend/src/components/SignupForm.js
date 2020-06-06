@@ -58,7 +58,6 @@ const SignupForm = () => (
             // Object.keys(values).reduce((
             //
             // ))
-
             // setErrors({[field: string]: string })
           })
       }}

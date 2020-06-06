@@ -4,11 +4,12 @@ import {css, jsx} from '@emotion/core'
 import {ErrorMessage, Formik} from 'formik'
 import * as Yup from 'yup'
 import FormError from './Formerror'
+const axios = require('axios');
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
-    .email('Invalid email')
     .required('Required')
+    .email('Invalid email')
     .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, {
       excludeEmptyString: false,
     }),
@@ -20,8 +21,7 @@ const SignupSchema = Yup.object().shape({
         [Yup.ref('password')],
         'Both password need to be the same',
       ),
-    })
-    .required('Required'),
+    }).required('Required'),
   username: Yup.string().required('Required'),
   firstName: Yup.string().required('Required'),
   lastName: Yup.string().required('Required'),
@@ -39,21 +39,37 @@ const SignupForm = () => (
         lastName: '',
       }}
       validationSchema={SignupSchema}
-      onSubmit={(values, {setSubmitting}) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2))
-          setSubmitting(false)
-        }, 400)
+      onSubmit={(values, {setSubmitting, setErrors}) => {
+        console.log(setSubmitting)
+        console.log(values)
+
+        axios.post('http://localhost:8000/rest-auth/registration/',{
+          'email': values.email,
+          'username': values.username,
+          'password1': values.password,
+          'password2': values.confirmPassword
+        }).then( response => { console.log(response)})
+          .catch( error => {
+            console.log(error)
+            setTimeout(() => {
+              alert(JSON.stringify(error.response.data, null, 2))
+              setSubmitting(false)
+            }, 400)
+            // Object.keys(values).reduce((
+            //
+            // ))
+
+            // setErrors({[field: string]: string })
+          })
       }}
     >
       {({
         values,
-        // errors,
-        // touched,
         handleChange,
         handleBlur,
         handleSubmit,
         isSubmitting,
+        dirty,
         /* and other goodies */
       }) => (
         <form onSubmit={handleSubmit} className="pt-6 pb-8 mb-4">
@@ -169,12 +185,12 @@ const SignupForm = () => (
           </div>
           <button
             className="text-white font-bold py-2 px-8 rounded-lg focus:outline-none focus:shadow-outline"
-            type="button"
+            type="submit"
             css={css`
               background: linear-gradient(264.33deg, #7ee0ef 0%, #15aad9 100%);
               box-shadow: 0px 15px 20px rgba(32, 175, 221, 0.34);
             `}
-            disabled={isSubmitting}
+            disabled={isSubmitting || !dirty}
           >
             Submit
           </button>

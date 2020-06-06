@@ -1,6 +1,7 @@
-import React from 'react'
+/** @jsx jsx */
+/** @jsxFrag React.Fragment */
+import {css, jsx} from '@emotion/core'
 import {ErrorMessage, Formik} from 'formik'
-import {css} from '@emotion/core'
 import * as Yup from 'yup'
 import FormError from './Formerror'
 
@@ -166,23 +167,17 @@ const SignupForm = () => (
             />
             <ErrorMessage component={FormError} name="confirmPassword" />
           </div>
-          <div className="flex items-center justify-between">
-            <button
-              className="text-white font-bold py-2 px-8 rounded-lg focus:outline-none focus:shadow-outline"
-              type="button"
-              css={css`
-                background: linear-gradient(
-                  264.33deg,
-                  #7ee0ef 0%,
-                  #15aad9 100%
-                );
-                box-shadow: 0px 15px 20px rgba(32, 175, 221, 0.34);
-              `}
-              disabled={isSubmitting}
-            >
-              Submit
-            </button>
-          </div>
+          <button
+            className="text-white font-bold py-2 px-8 rounded-lg focus:outline-none focus:shadow-outline"
+            type="button"
+            css={css`
+              background: linear-gradient(264.33deg, #7ee0ef 0%, #15aad9 100%);
+              box-shadow: 0px 15px 20px rgba(32, 175, 221, 0.34);
+            `}
+            disabled={isSubmitting}
+          >
+            Submit
+          </button>
         </form>
       )}
     </Formik>

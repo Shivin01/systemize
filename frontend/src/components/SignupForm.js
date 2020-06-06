@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 import axios from 'axios'
 import FormError from './FormError'
 
+
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
     .required('Required')
@@ -28,7 +29,7 @@ const SignupSchema = Yup.object().shape({
   lastName: Yup.string().required('Required'),
 })
 
-const SignupForm = () => (
+const SignupForm = (history) => (
   <div>
     <Formik
       initialValues={{
@@ -40,30 +41,34 @@ const SignupForm = () => (
         lastName: '',
       }}
       validationSchema={SignupSchema}
-      onSubmit={(values, {setSubmitting}) => {
-        console.log(setSubmitting)
-        console.log(values)
+      onSubmit={(values, {setSubmitting, setErrors}) => {
+        axios.post('http://localhost:8000/rest-auth/registration/',{
+          'email': values.email,
+          'username': values.username,
+          'password1': values.password,
+          'password2': values.confirmPassword
+        }).then( response => {
+          console.log(response.data);
+          console.log(history);
+          history.history.push("/");
 
-        axios
-          .post('http://localhost:8000/rest-auth/registration/', {
-            email: values.email,
-            username: values.username,
-            password1: values.password,
-            password2: values.confirmPassword,
-          })
-          .then(response => {
-            console.log(response)
-          })
-          .catch(error => {
-            console.log(error)
-            setTimeout(() => {
-              alert(JSON.stringify(error.response.data, null, 2))
-              setSubmitting(false)
-            }, 400)
-            // Object.keys(values).reduce((
-            //
-            // ))
-            // setErrors({[field: string]: string })
+        })
+          .catch( error => {
+            console.log(error);
+            let err = {}
+            for (let [key, value] of Object.entries(error.response.data)) {
+              let err1 = {}
+              if (key === 'password1') {
+                key = 'password'
+              }
+              else if (key === 'password2') {
+                key = 'confirmPassword'
+              }
+              err1[key] = value[0]
+              err = {...err, ...err1}
+            }
+            setErrors(err)
+            setSubmitting(false)
           })
       }}
     >

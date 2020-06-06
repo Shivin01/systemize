@@ -5,8 +5,10 @@ import Logo from '../images/Logo.svg'
 import BackgroundShape from '../images/Shape.svg'
 import Image from '../images/image.svg'
 import SignupForm from './SignupForm'
+import { withRouter } from 'react-router';
 
-function Signup() {
+function Signup(props) {
+  console.log(props.history)
   return (
     <div className="flex items-center justify-center h-screen text-gray-700">
       <div className="sm:w-9/12 md:w-8/12 font-bold rounded-lg border shadow-xl">
@@ -51,7 +53,9 @@ function Signup() {
             </div>
             <div className="mt-16 w-full">
               <span className="uppercase text-2xl">Signup</span>
-              <SignupForm />
+              <SignupForm
+              history={props.history}
+              />
             </div>
           </div>
           <div
@@ -97,4 +101,4 @@ function Signup() {
   )
 }
 
-export default Signup
+export default withRouter(Signup)

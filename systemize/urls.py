@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+import rest_auth.registration.urls
+import allauth.account.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),

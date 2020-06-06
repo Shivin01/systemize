@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 import axios from 'axios'
 import FormError from './FormError'
 
+
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
     .required('Required')
@@ -28,7 +29,7 @@ const SignupSchema = Yup.object().shape({
   lastName: Yup.string().required('Required'),
 })
 
-const SignupForm = () => (
+const SignupForm = (history) => (
   <div>
     <Formik
       initialValues={{
@@ -41,21 +42,19 @@ const SignupForm = () => (
       }}
       validationSchema={SignupSchema}
       onSubmit={(values, {setSubmitting, setErrors}) => {
-        console.log(setSubmitting)
-        console.log(values)
+        axios.post('http://localhost:8000/rest-auth/registration/',{
+          'email': values.email,
+          'username': values.username,
+          'password1': values.password,
+          'password2': values.confirmPassword
+        }).then( response => {
+          console.log(response.data);
+          console.log(history);
+          history.history.push("/");
 
-        axios
-          .post('http://localhost:8000/rest-auth/registration/', {
-            email: values.email,
-            username: values.username,
-            password1: values.password,
-            password2: values.confirmPassword,
-          })
-          .then(response => {
-            console.log(response)
-          })
-          .catch(error => {
-            console.log(error)
+        })
+          .catch( error => {
+            console.log(error);
             let err = {}
             for (let [key, value] of Object.entries(error.response.data)) {
               let err1 = {}
@@ -69,18 +68,19 @@ const SignupForm = () => (
               err = {...err, ...err1}
             }
             setErrors(err)
+            setSubmitting(false)
           })
       }}
     >
       {({
-        values,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting,
-        dirty,
-        /* and other goodies */
-      }) => (
+          values,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+          dirty,
+          /* and other goodies */
+        }) => (
         <form onSubmit={handleSubmit} className="pt-6 pb-8 mb-4">
           <div className="mb-4">
             <label

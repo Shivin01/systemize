@@ -101,8 +101,12 @@ WSGI_APPLICATION = 'systemize.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('PG_DB_NAME', 'systemize'),
+        'USER': os.environ.get('PG_DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('PG_DB_PASS', None),
+        'HOST': os.environ.get('PG_DB_HOST', 'localhost'),
+        'PORT': os.environ.get('PG_DB_PORT', 5432),
     }
 }
 

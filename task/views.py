@@ -1,26 +1,22 @@
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets
 from rest_framework.authentication import (
     SessionAuthentication,
     BasicAuthentication
 )
 from task.serializer import (
-    ProjectSerializer,
     TaskSerializer,
     CommentSerializer
 )
-from task.models import Project, Task, Comment
+from task.models import Task, Comment
 
 
-class ProjectViewSet(viewsets.ModelViewSet):
-    authentication_classes = (SessionAuthentication, BasicAuthentication)
-    serializer_class = ProjectSerializer
-    queryset = Project.objects.all()
-
-
+@csrf_exempt
 class TaskViewSet(viewsets.ModelViewSet):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
     serializer_class = TaskSerializer
     queryset = Task.objects.all()
+    permission_classes = []
 
 
 class CommentViewSet(viewsets.ModelViewSet):

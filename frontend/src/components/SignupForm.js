@@ -40,7 +40,7 @@ const SignupForm = () => (
         lastName: '',
       }}
       validationSchema={SignupSchema}
-      onSubmit={(values, {setSubmitting}) => {
+      onSubmit={(values, {setSubmitting, setErrors}) => {
         console.log(setSubmitting)
         console.log(values)
 
@@ -56,9 +56,9 @@ const SignupForm = () => (
           })
           .catch(error => {
             console.log(error)
-            var err = {}
+            let err = {}
             for (let [key, value] of Object.entries(error.response.data)) {
-              var err1 = {}
+              let err1 = {}
               if (key === 'password1') {
                 key = 'password'
               }

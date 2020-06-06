@@ -51,12 +51,12 @@ class Task(BaseModel):
     due_date = models.DateTimeField(blank=True, null=True)
     status = models.IntegerField(choices=all_status_types, default=NEW)
     label = models.IntegerField(choices=all_label_types, default=OTHERS)
-    assigned_to = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
+    assigned_to = models.ForeignKey(UserProfile, on_delete=models.CASCADE, blank=True, null=True)
     priority = models.IntegerField(choices=all_priority_types, default=MEDIUM)
     created_by = models.ForeignKey(UserProfile,
                                    on_delete=models.CASCADE, related_name='tasks')
     archived = models.BooleanField(default=False)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='tasks')
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='tasks', null=True, blank=True)
 
     def __str__(self):
         return self.name

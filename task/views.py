@@ -23,6 +23,10 @@ class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     permission_classes = []
 
+    def create(self, request, *args, **kwargs):
+        print(request)
+        super(TaskViewSet, self).create(request, *args, **kwargs)
+
 
 class CommentViewSet(viewsets.ModelViewSet):
     authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)

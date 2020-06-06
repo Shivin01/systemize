@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -164,3 +165,10 @@ CORS_ALLOW_METHODS = (
     'OPTIONS'
 )
 CORS_ALLOW_CREDENTIALS = True
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = True
+AUTHENTICATION_BACKENDS = ('systemize.authentication.EmailBackend', )

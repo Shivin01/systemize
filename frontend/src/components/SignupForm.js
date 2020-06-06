@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 import FormError from './Formerror'
 const axios = require('axios');
 
+
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
     .required('Required')
@@ -27,7 +28,7 @@ const SignupSchema = Yup.object().shape({
   lastName: Yup.string().required('Required'),
 })
 
-const SignupForm = () => (
+const SignupForm = (history) => (
   <div>
     <Formik
       initialValues={{
@@ -40,20 +41,22 @@ const SignupForm = () => (
       }}
       validationSchema={SignupSchema}
       onSubmit={(values, {setSubmitting, setErrors}) => {
-        console.log(setSubmitting)
-        console.log(values)
-
         axios.post('http://localhost:8000/rest-auth/registration/',{
           'email': values.email,
           'username': values.username,
           'password1': values.password,
           'password2': values.confirmPassword
-        }).then( response => { console.log(response)})
+        }).then( response => {
+          console.log(response.data);
+          console.log(history);
+          history.history.push("/");
+
+        })
           .catch( error => {
-            console.log(error)
-            var err = {}
+            console.log(error);
+            let err = {}
             for (let [key, value] of Object.entries(error.response.data)) {
-              var err1 = {}
+              let err1 = {}
               if (key === 'password1') {
                 key = 'password'
               }
@@ -64,6 +67,7 @@ const SignupForm = () => (
               err = {...err, ...err1}
             }
             setErrors(err)
+            setSubmitting(false)
           })
       }}
     >

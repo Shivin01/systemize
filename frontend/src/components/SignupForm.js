@@ -51,14 +51,19 @@ const SignupForm = () => (
         }).then( response => { console.log(response)})
           .catch( error => {
             console.log(error)
-            setTimeout(() => {
-              alert(JSON.stringify(error.response.data, null, 2))
-              setSubmitting(false)
-            }, 400)
-            // Object.keys(values).reduce((
-            //
-            // ))
-            // setErrors({[field: string]: string })
+            var err = {}
+            for (let [key, value] of Object.entries(error.response.data)) {
+              var err1 = {}
+              if (key === 'password1') {
+                key = 'password'
+              }
+              else if (key === 'password2') {
+                key = 'confirmPassword'
+              }
+              err1[key] = value[0]
+              err = {...err, ...err1}
+            }
+            setErrors(err)
           })
       }}
     >

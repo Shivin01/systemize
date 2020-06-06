@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.postgres.fields import JSONField
+
+from task.validators import JSONSchemaValidator
 from user.models import UserProfile, Organization
 
 
@@ -11,19 +14,6 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
-
-# # TODO we can remove this
-# class Project(BaseModel):
-#     """
-#     Project model
-#     """
-#     name = models.CharField(max_length=50)
-#     created_by = models.ForeignKey(UserProfile,
-#                                    on_delete=models.CASCADE, related_name="projects")
-#     favourite = models.BooleanField(default=False)
-#
-#     def __str__(self):
-#         return self.name
 
 
 class Task(BaseModel):
@@ -61,8 +51,6 @@ class Task(BaseModel):
     due_date = models.DateTimeField(blank=True, null=True)
     status = models.IntegerField(choices=all_status_types, default=NEW)
     label = models.IntegerField(choices=all_label_types, default=OTHERS)
-    # project = models.ForeignKey(Project, on_delete=models.CASCADE,
-    #                             related_name='tasks')
     assigned_to = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
     priority = models.IntegerField(choices=all_priority_types, default=MEDIUM)
     created_by = models.ForeignKey(UserProfile,
@@ -75,24 +63,34 @@ class Task(BaseModel):
 
 
 class TaskInfo(models.Model):
-    CONFIG_SCHEMA = {
+    """
+    Model to store timeline information for task like
+
+    """
+
+    JSON_SCHEMA = {
+        "schema": 'http://json-schema.org/draft-07/schema#',
         "type": "object",
         "properties": {
-            "points": {"type": "string", "default": ""},
-            "is_writable": {"type": "string", "default": ""},
-            "frequency_writable": {"type": "string", "default": ""},
-            "register_type": {"type": "string", "default": ""},
-            "register_address": {"type": "string", "default": ""},
-            "register_data_type": {"type": "string", "default": ""},
-            "byte_order": {"type": "string", "default": ""},
-            "low_op_rule_id": {"type": "string", "default": ""},
-            "high_op_rule_id": {"type": "string", "default": ""}
+            "new": {
+                type: "array"
+            },
+            "in_progress": {
+                type: "array"
+            },
+            "completed": {
+                type: "array"
+            }
         },
         "required": [],
         "additionalProperties": False
     }
 
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='task_info')
+    timeline = JSONField(
+        default=dict,
+        validators=[JSONSchemaValidator(limit_value=JSON_SCHEMA)]
+    )
 
 
 class Comment(BaseModel):

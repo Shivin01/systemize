@@ -12,7 +12,7 @@ function NavBar({active, setActive}) {
 
   return (
     <Fragment>
-      <div className="w-screen h-auto shadow-xl">
+      <div className="w-screen h-auto shadow-xl fixed top-0 left-0 bg-white">
         <div className="container m-auto">
           <nav className="flex items-center justify-between flex-wrap py-4">
             <a

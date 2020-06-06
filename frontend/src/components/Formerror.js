@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-function FormError(props) {
-  console.log(props);
-  return(
-    <p className="text-red-500 text-xs italic">
-      {props.children}
-    </p>
-)
+function FormError({children}) {
+  return <p className="text-red-500 text-xs italic">{children}</p>
 }
 
-export default FormError;
+FormError.propTypes = {
+  children: PropTypes.string.isRequired,
+}
+
+export default FormError

@@ -4,7 +4,7 @@ import {jsx, css} from '@emotion/core'
 import Logo from '../images/Logo.svg'
 import BackgroundShape from '../images/Shape.svg'
 import Image from '../images/image.svg'
-import SignupForm from "./SignupForm";
+import SignupForm from './SignupForm'
 
 function Signup() {
   return (
@@ -51,23 +51,7 @@ function Signup() {
             </div>
             <div className="mt-16 w-full">
               <span className="uppercase text-2xl">Signup</span>
-                <SignupForm />
-                {/*<div className="flex items-center justify-between">*/}
-                {/*  <button*/}
-                {/*    className="text-white font-bold py-2 px-8 rounded-lg focus:outline-none focus:shadow-outline"*/}
-                {/*    type="button"*/}
-                {/*    css={css`*/}
-                {/*      background: linear-gradient(*/}
-                {/*        264.33deg,*/}
-                {/*        #7ee0ef 0%,*/}
-                {/*        #15aad9 100%*/}
-                {/*      );*/}
-                {/*      box-shadow: 0px 15px 20px rgba(32, 175, 221, 0.34);*/}
-                {/*    `}*/}
-                {/*  >*/}
-                {/*    Sign Up*/}
-                {/*  </button>*/}
-                {/*</div>*/}
+              <SignupForm />
             </div>
           </div>
           <div

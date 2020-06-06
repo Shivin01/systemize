@@ -21,6 +21,7 @@ import allauth.account.urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('user.urls')),
+    path('task/', include('task.urls')),
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
 ]

@@ -1,55 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import ModalFooter from './ModalFooter'
+import ModalHeader from './ModalHeader'
 
-function Modal({setIsOpen}) {
+function Modal({
+  setShowModal,
+  heading = null,
+  saveBtnText = 'Save',
+  children,
+  isSaveBtnDisabled = false,
+}) {
   return (
     <>
-      <div
-        className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-        onClick={() => setIsOpen(false)}
-      >
+      <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
         <div className="relative w-auto my-6 mx-auto max-w-3xl">
           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-            <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
-              <h3 className="text-3xl font-semibold">Modal Title</h3>
-              <button
-                className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                onClick={() => setIsOpen(false)}
-              >
-                <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                  ×
-                </span>
-              </button>
-            </div>
+            <ModalHeader setShowModal={setShowModal} heading={heading} />
 
-            <div className="relative p-6 flex-auto">
-              <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                I always felt like I could do anything. That&apos;s the main
-                thing people are controlled by Thoughts their perception of
-                themselves! They&apos;re slowed down by their perception of
-                themselves. If you&apos;re taught you can&apos;t do anything,
-                you won&apos;t do anything. I was taught I could do everything.
-              </p>
-            </div>
+            <div className="relative p-6 flex-auto">{children}</div>
 
-            <div className="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
-              <button
-                className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
-                type="button"
-                style={{transition: 'all .15s ease'}}
-                onClick={() => setIsOpen(false)}
-              >
-                Close
-              </button>
-              <button
-                className="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-                type="button"
-                style={{transition: 'all .15s ease'}}
-                onClick={() => setIsOpen(false)}
-              >
-                Save Changes
-              </button>
-            </div>
+            <ModalFooter
+              setShowModal={setShowModal}
+              saveBtnText={saveBtnText}
+              isDisabled={isSaveBtnDisabled}
+            />
           </div>
         </div>
       </div>
@@ -59,7 +33,11 @@ function Modal({setIsOpen}) {
 }
 
 Modal.propTypes = {
-  setIsOpen: PropTypes.func.isRequired,
+  setShowModal: PropTypes.func.isRequired,
+  heading: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  saveBtnText: PropTypes.string,
+  children: PropTypes.node.isRequired,
+  isSaveBtnDisabled: PropTypes.bool,
 }
 
 export default Modal

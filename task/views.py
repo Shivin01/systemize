@@ -11,7 +11,6 @@ from task.serializer import (
 from task.models import Task, Comment
 
 
-@csrf_exempt
 class TaskViewSet(viewsets.ModelViewSet):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
     serializer_class = TaskSerializer

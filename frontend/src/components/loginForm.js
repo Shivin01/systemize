@@ -3,7 +3,7 @@
 import {css, jsx} from '@emotion/core'
 import {ErrorMessage, Formik} from 'formik'
 import * as Yup from 'yup'
-import FormError from './Formerror'
+import FormError from './FormError'
 const axios = require('axios');
 
 const loginSchema = Yup.object().shape({

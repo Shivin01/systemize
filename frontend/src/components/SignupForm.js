@@ -3,8 +3,8 @@
 import {css, jsx} from '@emotion/core'
 import {ErrorMessage, Formik} from 'formik'
 import * as Yup from 'yup'
-import FormError from './Formerror'
-const axios = require('axios');
+import axios from 'axios'
+import FormError from './FormError'
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
@@ -21,7 +21,8 @@ const SignupSchema = Yup.object().shape({
         [Yup.ref('password')],
         'Both password need to be the same',
       ),
-    }).required('Required'),
+    })
+    .required('Required'),
   username: Yup.string().required('Required'),
   firstName: Yup.string().required('Required'),
   lastName: Yup.string().required('Required'),
@@ -39,17 +40,21 @@ const SignupForm = () => (
         lastName: '',
       }}
       validationSchema={SignupSchema}
-      onSubmit={(values, {setSubmitting, setErrors}) => {
+      onSubmit={(values, {setSubmitting}) => {
         console.log(setSubmitting)
         console.log(values)
 
-        axios.post('http://localhost:8000/rest-auth/registration/',{
-          'email': values.email,
-          'username': values.username,
-          'password1': values.password,
-          'password2': values.confirmPassword
-        }).then( response => { console.log(response)})
-          .catch( error => {
+        axios
+          .post('http://localhost:8000/rest-auth/registration/', {
+            email: values.email,
+            username: values.username,
+            password1: values.password,
+            password2: values.confirmPassword,
+          })
+          .then(response => {
+            console.log(response)
+          })
+          .catch(error => {
             console.log(error)
             setTimeout(() => {
               alert(JSON.stringify(error.response.data, null, 2))

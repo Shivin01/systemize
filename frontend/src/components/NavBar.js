@@ -5,10 +5,10 @@ import {useState, Fragment} from 'react'
 import PropTypes from 'prop-types'
 
 import Logo from '../images/Logo.svg'
-import Modal from './Modal'
+import CreateTask from './CreateTask'
 
 function NavBar({active, setActive}) {
-  const [isOpen, setIsOpen] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
   return (
     <Fragment>
@@ -43,7 +43,7 @@ function NavBar({active, setActive}) {
                 <button
                   className="text-white font-bold py-2 px-12 rounded focus:outline-none focus:shadow-outline"
                   type="button"
-                  onClick={() => setIsOpen(true)}
+                  onClick={() => setShowModal(true)}
                   css={css`
                     background: linear-gradient(
                       264.33deg,
@@ -61,7 +61,7 @@ function NavBar({active, setActive}) {
           </nav>
         </div>
       </div>
-      {isOpen ? <Modal setIsOpen={setIsOpen} /> : null}
+      {showModal ? <CreateTask setShowModal={setShowModal} /> : null}
     </Fragment>
   )
 }

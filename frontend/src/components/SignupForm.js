@@ -1,6 +1,35 @@
 import React from 'react';
-import { Formik } from 'formik';
+import {ErrorMessage, Formik} from 'formik';
 import {css} from "@emotion/core";
+import * as Yup from 'yup';
+import FormError from "./Formerror";
+
+const SignupSchema = Yup.object().shape({
+
+  email: Yup.string()
+    .email('Invalid email')
+    .required('Required')
+    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, {
+      excludeEmptyString: false
+    }),
+  password: Yup.string()
+    .required('Required'),
+  confirmPassword: Yup.string()
+    .when("password", {
+    is: val => (val && val.length > 0 ? true : false),
+    then: Yup.string().oneOf(
+      [Yup.ref("password")],
+      "Both password need to be the same"
+    )
+  })
+    .required('Required'),
+  username: Yup.string()
+    .required('Required'),
+  firstName: Yup.string()
+    .required('Required'),
+  lastName: Yup.string()
+    .required('Required'),
+});
 
 const SignupForm = () => (
   <div>
@@ -10,22 +39,12 @@ const SignupForm = () => (
           email: '',
           password: '',
           confirmPassword: '',
-          userName: '',
+          username: '',
           firstName: '',
           lastName: ''
         }
       }
-      validate={values => {
-        const errors = {};
-        if (!values.email) {
-          errors.email = 'Required';
-        } else if (
-          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-        ) {
-          errors.email = 'Invalid email address';
-        }
-        return errors;
-      }}
+      validationSchema={SignupSchema}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
           alert(JSON.stringify(values, null, 2));
@@ -58,9 +77,9 @@ const SignupForm = () => (
               placeholder="Username"
               onChange={handleChange}
               onBlur={handleBlur}
-              value={values.password}
+              value={values.username}
             />
-            {errors.userName && touched.userName && errors.userName}
+            <ErrorMessage component={FormError} name="username" />
           </div>
           <div className="mb-4">
             <label
@@ -78,7 +97,7 @@ const SignupForm = () => (
                 onBlur={handleBlur}
                 value={values.email}
               />
-              {errors.email && touched.email && errors.email}
+            <ErrorMessage component={FormError} name="email" />
           </div>
           <div className="mb-4">
             <label
@@ -89,14 +108,14 @@ const SignupForm = () => (
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="first-name"
+              id="firstName"
               type="text"
               placeholder="First Name"
               onChange={handleChange}
               onBlur={handleBlur}
-              value={values.password}
+              value={values.firstName}
             />
-            {errors.firstName && touched.firstName && errors.firstName}
+            <ErrorMessage component={FormError} name="firstName" />
           </div>
           <div className="mb-4">
             <label
@@ -107,14 +126,14 @@ const SignupForm = () => (
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="last-name"
+              id="lastName"
               type="text"
               placeholder="Last Name"
               onChange={handleChange}
               onBlur={handleBlur}
-              value={values.password}
+              value={values.lastName}
             />
-            {errors.lastName && touched.lastName && errors.lastName}
+            <ErrorMessage component={FormError} name="lastName" />
           </div>
           <div className="mb-4">
             <label
@@ -133,7 +152,7 @@ const SignupForm = () => (
               onBlur={handleBlur}
               value={values.password}
             />
-            {errors.password && touched.password && errors.password}
+            <ErrorMessage component={FormError} name="password" />
             </div>
           <div className="mb-4">
             <label
@@ -144,15 +163,14 @@ const SignupForm = () => (
             </label>
             <input
               className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              id="password"
+              id="confirmPassword"
               type="password"
               placeholder="******************"
-              name="password"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.confirmPassword}
             />
-            {errors.confirmPassword && touched.confirmPassword && errors.confirmPassword}
+            <ErrorMessage component={FormError} name="confirmPassword" />
           </div>
           <div className="flex items-center justify-between">
           <button
@@ -166,7 +184,8 @@ const SignupForm = () => (
                   );
                   box-shadow: 0px 15px 20px rgba(32, 175, 221, 0.34);
                 `}
-              disabled={isSubmitting}>
+                disabled={isSubmitting}
+            >
             Submit
           </button>
           </div>

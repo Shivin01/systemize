@@ -105,7 +105,7 @@ function CreateTask({
       validationSchema={Yup.object().shape({
         name: Yup.string().required('Please enter a task name'),
         description: Yup.string(),
-        dueDate: numberNullableField.required('Please enter a due date'),
+        dueDate: Yup.string().required('Please enter a due date'),
         status: numberNullableField.required('Please enter a status'),
         label: numberNullableField.required('Please enter a status'),
         assignedTo: numberNullableField,
@@ -163,10 +163,10 @@ function CreateTask({
                   </label>
                   <DayPickerInput
                     onDayChange={day => {
-                      setFieldValue('dueDate', day.getTime())
+                      setFieldValue('dueDate', day)
                     }}
                     formatDate={formatDate}
-                    format="LL"
+                    format="YYYY-MM-DD HH:mm Z"
                     keepFocus={false}
                     parseDate={parseDate}
                     onDayPickerHide={() => {

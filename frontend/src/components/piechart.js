@@ -16,7 +16,7 @@ function CustomPieChart(props) {
         {
           name: 'Tasks',
           colorByPoint: true,
-          data: props.pieChartData,
+          data: props.pieChartData
         },
       ],
     }
@@ -89,14 +89,15 @@ function CustomPieChart(props) {
     }
     setPieChartData(pieData)
     setColumnChartData(columnData)
-  }, [])
+  }, [props.pieChartData, props.ColumnChartNew, props.ColumnChartInprogress, props.ColumnChartCompleted])
 
-  function returnPieChart() {}
+  console.log(props.pieChartData.completed_task)
+  console.log(pieChartData)
 
   return (
     <div>
       <h2>DATA</h2>
-      <PieChart highcharts={Highcharts} options={pieChartData} />
+      <PieChart options={pieChartData} />
       <ColumnChart highcharts={Highcharts} options={columnChartData} />
     </div>
   )

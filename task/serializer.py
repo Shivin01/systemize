@@ -1,4 +1,3 @@
-import pytz
 from rest_framework import serializers
 from datetime import datetime, timezone
 
@@ -28,6 +27,7 @@ class TimestampField(serializers.DateTimeField):
         converted = datetime.fromtimestamp(float('%s' % value))
         return super(TimestampField, self).to_representation(converted)
 
+
 class ReadOnlyTimestampField(serializers.ReadOnlyField):
     def to_representation(self, value):
         return int(value.timestamp() * 1000.)
@@ -38,36 +38,7 @@ class BaseSerializer(serializers.ModelSerializer):
     updated_at = ReadOnlyTimestampField()
 
 
-class TimestampField(serializers.Field):
-    def to_representation(self, value):
-        return TimeUtils.to_epoch(value)
-
-    def to_internal_value(self, value):
-        return TimeUtils.parse_telemetry_ts(value)
-
-
-class TimeUtils(object):
-    MICROSECONDS_GRANULARITY = "%y%m%d%H%M%S%f"
-
-    @classmethod
-    def to_epoch(cls, dt):
-        """
-        """
-        return int(dt.timestamp() * 1000.)
-
-    @classmethod
-    def parse_telemetry_ts(cls, ts, time_zone='UTC'):
-        """
-        """
-        user_tz = timezone(time_zone)
-        return pytz.utc.localize(
-                datetime.utcfromtimestamp(float(str(ts)) / 1000.)
-        ).astimezone(user_tz)
-
-
 class TaskSerializer(BaseSerializer):
-
-    due_date = TimestampField()
 
     class Meta:
         model = Task
@@ -79,6 +50,7 @@ class TaskSerializer(BaseSerializer):
     def create(self, validated_data):
         validated_data['created_by'] = User.objects.get(
             id=self.context['request'].user.id)
+        print(validated_data)
         return super(TaskSerializer, self).create(validated_data)
 
 

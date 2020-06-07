@@ -3,49 +3,39 @@
 import {css, jsx} from '@emotion/core'
 import {useEffect, useState} from 'react'
 
-// import ProfileImage from '../images/Ellipse.png'
 import editSvg from '../images/Vector.svg'
-import locationSvg from '../images/location.svg'
 import personSvg from '../images/person.svg'
 import axiosInstance from "../utils/axiosInsance";
-const axios = require('axios').default;
-
 
 function Profile() {
   const [, setShowModal] = useState(false)
   const [userDetails, setUserDetails] = useState({})
 
   useEffect(() => {
-    // Update the document title using the browser API
-    axiosInstance.get('http://localhost:8000/users/user_profile/')
+    axiosInstance.get('/users/user_profile/')
       .then(function (response) {
-        // handle success
-        console.log(response);
-        if (response.data) {
-          console.log(response.data);
-          setUserDetails(response.data)
+        if (response.data && response.data.length) {
+          setUserDetails(response.data[0])
         }
       })
       .catch(function (error) {
-        // handle error
         console.log(error);
       })
 
-  },[]);
+  }, []);
 
-  function fetchUsername() {
-    // console.log(username)
-    // console.log(username)
-    console.log(userDetails)
-    return userDetails.first_name ? userDetails.first_name : userDetails.username
-  }
+  console.log(userDetails)
 
-
-  //
-  // const item = window.localStorage.getItem('token');
-  // const token = item ? JSON.parse(item) : null
-  // console.log(token)
-  // axiosInstance.get('http://localhost:8000/users/user_profile/')
+  const {
+    first_name,
+    last_name,
+    username,
+    email,
+    current_organization,
+    guest_organizations,
+    phone,
+    timezone
+  } = userDetails
 
   return (
     <section className="h-screen pt-40">
@@ -56,24 +46,15 @@ function Profile() {
               <img
                 className="m-auto rounded-full"
                 src={userDetails.profile_image}
-                alt="sdfs"
+                alt="user image"
               />
             </div>
-            <div className="">Work</div>
           </div>
           <div className="w-full">
             <div className="flex justify-between flex-wrap">
               <div>
                 <h1 className="block text-4xl font-medium pt-0 pl-0 text-gray-700">
-                  { fetchUsername() }
-                  {/*<span className="inline-block font-normal text-xs text-gray-500 pl-6">*/}
-                  {/*  <img*/}
-                  {/*    className="inline-block w-4 h-4 pb-1"*/}
-                  {/*    src={locationSvg}*/}
-                  {/*    alt="location"*/}
-                  {/*  />*/}
-                  {/*  Location*/}
-                  {/*</span>*/}
+                  {first_name ? `${first_name} ${last_name}` : 'No Name'}
                 </h1>
                 <span
                   className="block text-xs font-normal"
@@ -81,7 +62,7 @@ function Profile() {
                     color: #15aad9;
                   `}
                 >
-                  {userDetails.username}
+                  {username ? `@${username}` : '...'}
                 </span>
               </div>
               <div className="pt-2" onClick={() => setShowModal(true)}>
@@ -116,18 +97,41 @@ function Profile() {
                 Contact Information
               </h3>
               <table className="table mt-2 text-sm">
-                <tr>
-                  <td>Phone:</td>
-                  <td className="text-blue-400 pl-3">+9123232323</td>
-                </tr>
+                <tbody>
+                {phone ? (
+                  <tr>
+                    <td>Phone:</td>
+                    <td className="text-blue-400 pl-3">{phone}</td>
+                  </tr>
+                ) : null}
                 <tr>
                   <td>Email:</td>
-                  <td className="pl-3">john.doe@custom.com</td>
+                  <td className="pl-3">{email}</td>
                 </tr>
                 <tr>
                   <td>Timezone:</td>
-                  <td className="pl-3">Asia/Kolkata</td>
+                  <td className="pl-3">{timezone ? timezone : 'None'}</td>
                 </tr>
+                </tbody>
+              </table>
+
+              <h3 className="mt-4 uppercase text-xs text-gray-600">
+                Work
+              </h3>
+              <table className="table mt-2 text-sm">
+                <tbody>
+                <tr>
+                  <td>Organization:</td>
+                  <td
+                    className="text-blue-400 pl-3">{current_organization ? current_organization : 'None'}</td>
+                </tr>
+                {guest_organizations && guest_organizations.length ? (
+                  <tr>
+                    <td>Guest Organizations:</td>
+                    <td className="pl-3">{guest_organizations.reduce((acc, org) => `${acc}, ${org}`, '')}</td>
+                  </tr>
+                ) : null}
+                </tbody>
               </table>
             </div>
           </div>

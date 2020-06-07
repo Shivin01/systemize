@@ -36,9 +36,6 @@ const LoginForm = ({history}) => {
           } else {
             data = {username: values.usernameOrEmail}
           }
-          else {
-            data = {'username': values.usernameOrEmail}
-          }
           axios.post('http://localhost:8000/rest-auth/login/',{
             ...data,
             'password': values.password

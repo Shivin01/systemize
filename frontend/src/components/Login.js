@@ -7,7 +7,6 @@ import Logo from '../images/Logo.svg'
 import BackgroundShape from '../images/Shape.svg'
 import Image from '../images/image.svg'
 import LoginForm from "./loginForm";
-import {UsersProvider} from "../contexts/user";
 
 function Login(props) {
   return (

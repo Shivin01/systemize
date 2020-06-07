@@ -37,8 +37,10 @@ const LoginForm = ({history}) => {
             ...data,
             'password': values.password
           }).then( response => {
-            if (getIn(response, 'data.key')) {
-              setValue(response.data.key)
+            console.log(response.data)
+            if (getIn(response, 'data.token')) {
+              console.log(response.data.token)
+              setValue(response.data.token)
               history.push("/");
             } else {
               setValue('')

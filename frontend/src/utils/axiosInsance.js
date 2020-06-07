@@ -4,12 +4,18 @@ import axios from "axios";
 // const csrftoken = Cookies.get("csrftoken");
 
 const item = window.localStorage.getItem('token');
+console.log(item);
 const token = item ? JSON.parse(item) : null
+console.log('token')
 console.log(token)
 
 const axiosInstance = axios.create({
-  headers: {'Authorization': `Token ${token}`}
+  headers: {'Authorization': `Bearer ${token}`}
 });
+
+console.log(axiosInstance.defaults.headers)
+
+
 
 // Since we will only be using JSON APIs, add Content-Type: application/json to header as default
 axiosInstance.defaults.headers.post["Content-Type"] = "application/json";

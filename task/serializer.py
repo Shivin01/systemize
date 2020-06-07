@@ -27,7 +27,6 @@ class TimestampField(serializers.DateTimeField):
         converted = datetime.fromtimestamp(float('%s' % value))
         return super(TimestampField, self).to_representation(converted)
 
-
 class ReadOnlyTimestampField(serializers.ReadOnlyField):
     def to_representation(self, value):
         return int(value.timestamp() * 1000.)

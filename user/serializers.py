@@ -6,7 +6,7 @@ from task.serializer import BaseSerializer
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        fields = ('email', 'username', 'id')
+        fields = '__all__'
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -44,11 +44,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     def get_profile_image(self, obj):
         return obj.profile_image.url if obj.profile_image else ''
-
-    def save(self):
-        print(self.context)
-        super().save()
-        self.context['request'].user.assets.add(self.instance)
 
 
 class OrganizationSerializer(BaseSerializer):

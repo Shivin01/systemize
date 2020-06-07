@@ -12,7 +12,7 @@ function ModalFooter({setShowModal, saveBtnText = 'Save', isDisabled = false}) {
       >
         Cancel
       </button>
-      <button type="submit">{saveBtnText}</button>
+      <button className="button" type="submit" >{saveBtnText}</button>
     </div>
   )
 }

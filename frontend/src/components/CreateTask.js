@@ -104,15 +104,15 @@ function CreateTask({setShowModal, showModal, isFetchingUser, users}) {
         dirty,
         isSubmitting,
       }) =>
-        console.log(values) || (
+        console.log(values, errors, touched, dirty, isSubmitting) || (
+          <Modal
+            setShowModal={setShowModal}
+            heading="Create Task"
+            saveBtnText="Save"
+            isSaveBtnDisabled={isSubmitting || !dirty}
+            showModal={showModal}
+          >
           <form onSubmit={handleSubmit} onReset={handleReset}>
-            <Modal
-              setShowModal={setShowModal}
-              heading="Create Task"
-              saveBtnText="Save"
-              isSaveBtnDisabled={isSubmitting || !dirty}
-              showModal={showModal}
-            >
               <div className="flex flex-wrap -mx-3 mb-6">
                 <CustomField fieldName="name" required />
               </div>
@@ -166,8 +166,10 @@ function CreateTask({setShowModal, showModal, isFetchingUser, users}) {
                   <ErrorMessage name="dueDate" component={FormError} />
                 </div>
               </div>
-            </Modal>
+              <button type="submit" disabled={isSubmitting || !dirty}>save</button>
           </form>
+          </Modal>
+
         )
       }
     </Formik>

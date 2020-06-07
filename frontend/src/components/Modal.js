@@ -31,7 +31,7 @@ function Modal({
   children,
   isSaveBtnDisabled = false,
 }) {
-  return (
+  return console.log('isSaveBtnDisabled', isSaveBtnDisabled) || (
     <ReactModal
       isOpen={showModal}
       onRequestClose={() => setShowModal(false)}

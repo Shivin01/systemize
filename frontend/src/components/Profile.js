@@ -27,21 +27,17 @@ function Profile() {
 
     axiosInstance.get('http://localhost:8000/users/pie_chart_data/')
       .then(function (response) {
-        console.log(response.data)
         setPieChartData(response.data)
       })
       .catch(function (error) {console.log(error)})
 
     axiosInstance.get('http://localhost:8000/users/bar_chart_data/')
       .then(function (response) {
-        console.log(response.data)
         setBarChartData(response.data)
       })
       .catch(function (error) {console.log(error)})
 
   }, []);
-
-  console.log(barChartData)
 
   const {
     first_name,

@@ -86,9 +86,6 @@ function CustomPieChart(props) {
     setColumnChartData(columnData)
   }, [])
 
-  console.log(props.ColumnChartNew)
-  console.log(props.ColumnChartInprogress)
-  console.log(props.ColumnChartCompleted)
   function returnPieChart() {
 
   }

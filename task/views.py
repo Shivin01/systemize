@@ -64,9 +64,6 @@ class TaskGraphViewSet(viewsets.ModelViewSet):
             }]
         return Response(data)
 
-
-# class TaskBarGraphViewSet(viewsets.ModelViewSet):
-
     def get_bar_data(self, request):
         """
         Get bar data

@@ -5,6 +5,7 @@ import {ErrorMessage, Formik, getIn} from 'formik'
 import * as Yup from 'yup'
 import FormError from './FormError'
 import useLocalStorage from "../hooks/useLocalStorage";
+import {useUsers} from "../contexts/user";
 const axios = require('axios');
 
 const loginSchema = Yup.object().shape({
@@ -15,6 +16,7 @@ const loginSchema = Yup.object().shape({
 
 const LoginForm = ({history}) => {
   const [, setValue] = useLocalStorage('token', '')
+  const {userDetails, setUserDetails} = useUsers()
 
   return (
     <div>
@@ -40,14 +42,21 @@ const LoginForm = ({history}) => {
             console.log(response.data)
             if (getIn(response, 'data.token')) {
               console.log(response.data.token)
+              if (getIn(response, 'data.user'))
+              {
+                console.log(response.data.user)
+                setUserDetails(response.data.user)
+              }
               setValue(response.data.token)
               history.push("/");
             } else {
               setValue('')
               history.push('/login')
             }
+
           })
             .catch( error => {
+              console.log(error)
               let err = {}
               for (let [key, value] of Object.entries(error.response.data)) {
                 if (key === "non_field_errors") {

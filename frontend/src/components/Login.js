@@ -7,6 +7,7 @@ import Logo from '../images/Logo.svg'
 import BackgroundShape from '../images/Shape.svg'
 import Image from '../images/image.svg'
 import LoginForm from "./loginForm";
+import {UsersProvider} from "../contexts/user";
 
 function Login(props) {
   return (
@@ -53,7 +54,7 @@ function Login(props) {
             </div>
             <div className="mt-16 w-full">
               <span className="uppercase text-2xl">Signin</span>
-              <LoginForm history={props.history}/>
+                <LoginForm history={props.history}/>
             </div>
           </div>
           <div

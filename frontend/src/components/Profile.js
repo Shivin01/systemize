@@ -7,9 +7,27 @@ import ProfileImage from '../images/Ellipse.png'
 import editSvg from '../images/Vector.svg'
 import locationSvg from '../images/location.svg'
 import personSvg from '../images/person.svg'
+import axiosInstance from "../utils/axiosInsance";
+const axios = require('axios').default;
+
 
 function Profile() {
   const [, setShowModal] = useState(false)
+
+  // axios.get('http://localhost:8000/users/user_profile/')
+  //   .then(function (response) {
+  //     // handle success
+  //     console.log(response);
+  //   })
+  //   .catch(function (error) {
+  //     // handle error
+  //     console.log(error);
+  //   })
+
+  const item = window.localStorage.getItem('token');
+  const token = item ? JSON.parse(item) : null
+  console.log(token)
+  axiosInstance.get('http://localhost:8000/users/user_profile/')
 
   return (
     <section className="h-screen pt-40">

@@ -8,7 +8,6 @@ import SignupForm from './SignupForm'
 import { withRouter } from 'react-router';
 
 function Signup(props) {
-  console.log(props.history)
   return (
     <div className="flex items-center justify-center h-screen text-gray-700">
       <div className="sm:w-9/12 md:w-8/12 font-bold rounded-lg border shadow-xl">

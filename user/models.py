@@ -27,7 +27,8 @@ class UserProfile(models.Model):
     """
     user = models.OneToOneField(to=User, on_delete=models.CASCADE)
     timezone = models.CharField(max_length=30)
-    current_organization = models.OneToOneField(Organization, on_delete=models.CASCADE, related_name='current_users', blank=True, null=True)
+    current_organization = models.OneToOneField(Organization, on_delete=models.CASCADE, related_name='current_users',
+                                                blank=True, null=True)
     guest_organizations = models.ManyToManyField(Organization, related_name='guest_users', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

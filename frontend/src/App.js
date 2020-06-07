@@ -1,6 +1,5 @@
-import React, {useState, useEffect, Fragment} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Switch, useLocation} from 'react-router-dom'
-
 import Login from './components/Login'
 import Signup from './components/Signup'
 import Home from './components/Home'
@@ -8,6 +7,7 @@ import NavBar from './components/NavBar'
 import Profile from './components/Profile'
 import PublicRoute from "./components/Route/PublicRoute";
 import PrivateRoute from "./components/Route/PrivateRoute";
+import {UsersProvider} from "./contexts/user";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -24,7 +24,7 @@ function App() {
   }, [location])
 
   return (
-    <Fragment>
+    <UsersProvider>
       {loggedIn && <NavBar />}
       <Switch>
         <PublicRoute path='/login' component={Login} />
@@ -32,7 +32,7 @@ function App() {
         <PrivateRoute path='/profile' component={Profile} />
         <PrivateRoute path='/' component={Home} />
       </Switch>
-    </Fragment>
+    </UsersProvider>
   )
 }
 

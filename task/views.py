@@ -19,12 +19,12 @@ class CsrfExemptSessionAuthentication(SessionAuthentication):
 
 class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, )
     queryset = Task.objects.all()
 
 
 class CommentViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, )
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
 

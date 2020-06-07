@@ -4,13 +4,12 @@ import {css, jsx} from '@emotion/core'
 import {ErrorMessage, Formik, getIn} from 'formik'
 import * as Yup from 'yup'
 import FormError from './FormError'
-import useLocalStorage from "../hooks/useLocalStorage";
+import useLocalStorage from '../hooks/useLocalStorage'
+import axios from 'axios'
 import {useUsers} from "../contexts/user";
-const axios = require('axios');
 
 const loginSchema = Yup.object().shape({
-  usernameOrEmail: Yup.string()
-    .required('Required'),
+  usernameOrEmail: Yup.string().required('Required'),
   password: Yup.string().required('Required'),
 })
 
@@ -27,10 +26,15 @@ const LoginForm = ({history}) => {
         }}
         validationSchema={loginSchema}
         onSubmit={(values, {setSubmitting, setErrors}) => {
-          let data = { }
-          if ( values.usernameOrEmail.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i) ) {
-
-            data = {'email': values.usernameOrEmail}
+          let data = {}
+          if (
+            values.usernameOrEmail.match(
+              /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            )
+          ) {
+            data = {email: values.usernameOrEmail}
+          } else {
+            data = {username: values.usernameOrEmail}
           }
           else {
             data = {'username': values.usernameOrEmail}
@@ -59,8 +63,8 @@ const LoginForm = ({history}) => {
               console.log(error)
               let err = {}
               for (let [key, value] of Object.entries(error.response.data)) {
-                if (key === "non_field_errors") {
-                  alert(JSON.stringify(value[0], null, 2));
+                if (key === 'non_field_errors') {
+                  alert(JSON.stringify(value[0], null, 2))
                 }
                 let err1 = {}
                 err1[key] = value[0]
@@ -72,14 +76,14 @@ const LoginForm = ({history}) => {
         }}
       >
         {({
-            values,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            isSubmitting,
-            dirty,
-            /* and other goodies */
-          }) => (
+          values,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+          dirty,
+          /* and other goodies */
+        }) => (
           <form onSubmit={handleSubmit} className="pt-6 pb-8 mb-4">
             <div className="mb-4">
               <label
@@ -122,9 +126,13 @@ const LoginForm = ({history}) => {
               className="text-white font-bold py-2 px-8 rounded-lg focus:outline-none focus:shadow-outline"
               type="submit"
               css={css`
-              background: linear-gradient(264.33deg, #7ee0ef 0%, #15aad9 100%);
-              box-shadow: 0px 15px 20px rgba(32, 175, 221, 0.34);
-            `}
+                background: linear-gradient(
+                  264.33deg,
+                  #7ee0ef 0%,
+                  #15aad9 100%
+                );
+                box-shadow: 0px 15px 20px rgba(32, 175, 221, 0.34);
+              `}
               disabled={isSubmitting || !dirty}
             >
               Submit

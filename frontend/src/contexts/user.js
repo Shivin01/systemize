@@ -1,6 +1,4 @@
 import React, {useState} from 'react'
-import {useQuery} from "react-query";
-import axiosInstance from "../utils/axiosInsance";
 
 const UserContext = React.createContext({users: []})
 UserContext.displayName = 'AuthContext'

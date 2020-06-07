@@ -1,12 +1,12 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 import {jsx, css} from '@emotion/core'
-import { withRouter } from 'react-router';
+import {withRouter} from 'react-router'
 
 import Logo from '../images/Logo.svg'
 import BackgroundShape from '../images/Shape.svg'
 import Image from '../images/image.svg'
-import LoginForm from "./loginForm";
+import LoginForm from './loginForm'
 
 function Login(props) {
   return (
@@ -53,7 +53,7 @@ function Login(props) {
             </div>
             <div className="mt-16 w-full">
               <span className="uppercase text-2xl">Signin</span>
-                <LoginForm history={props.history}/>
+              <LoginForm history={props.history} />
             </div>
           </div>
           <div

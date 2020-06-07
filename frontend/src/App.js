@@ -5,8 +5,9 @@ import Signup from './components/Signup'
 import Home from './components/Home'
 import NavBar from './components/NavBar'
 import Profile from './components/Profile'
-import PublicRoute from "./components/Route/PublicRoute";
-import PrivateRoute from "./components/Route/PrivateRoute";
+import PublicRoute from './components/Route/PublicRoute'
+import PrivateRoute from './components/Route/PrivateRoute'
+import AllTasks from './components/AllTasks'
 import {UsersProvider} from "./contexts/user";
 
 function App() {
@@ -27,10 +28,11 @@ function App() {
     <UsersProvider>
       {loggedIn && <NavBar />}
       <Switch>
-        <PublicRoute path='/login' component={Login} />
-        <PublicRoute path='/signup' component={Signup} />
-        <PrivateRoute path='/profile' component={Profile} />
-        <PrivateRoute path='/' component={Home} />
+        <PublicRoute path="/login" component={Login} />
+        <PublicRoute path="/signup" component={Signup} />
+        <PrivateRoute path="/profile" component={Profile} />
+        <PrivateRoute path="/all-tasks" component={AllTasks} />
+        <PrivateRoute path="/" component={Home} />
       </Switch>
     </UsersProvider>
   )

@@ -1,34 +1,51 @@
 import React from 'react'
+import cs from 'classnames'
+import ReactModal from 'react-modal'
 import PropTypes from 'prop-types'
 import ModalFooter from './ModalFooter'
 import ModalHeader from './ModalHeader'
 
+ReactModal.setAppElement('#root')
+
+const customStyles = {
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    padding: 0,
+    width: '50%',
+    transform: 'translate(-50%, -50%)',
+  },
+}
+
 function Modal({
   setShowModal,
+  showModal = false,
   heading = null,
   saveBtnText = 'Save',
   children,
   isSaveBtnDisabled = false,
 }) {
   return (
-    <>
-      <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-        <div className="relative w-auto my-6 mx-auto max-w-3xl">
-          <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-            <ModalHeader setShowModal={setShowModal} heading={heading} />
-
-            <div className="relative p-6 flex-auto">{children}</div>
-
-            <ModalFooter
-              setShowModal={setShowModal}
-              saveBtnText={saveBtnText}
-              isDisabled={isSaveBtnDisabled}
-            />
-          </div>
-        </div>
-      </div>
-      <div className="opacity-25 fixed inset-0 z-40 bg-black" />
-    </>
+    <ReactModal
+      isOpen={showModal}
+      onRequestClose={() => setShowModal(false)}
+      style={customStyles}
+      contentLabel="Example Modal"
+    >
+      <ModalHeader setShowModal={setShowModal} heading={heading} />
+      <div className="p-6 overflow-auto">{children}</div>
+      <ModalFooter
+        setShowModal={setShowModal}
+        isDisabled={isSaveBtnDisabled}
+        saveBtnText={saveBtnText}
+      />
+    </ReactModal>
   )
 }
 
@@ -38,6 +55,7 @@ Modal.propTypes = {
   saveBtnText: PropTypes.string,
   children: PropTypes.node.isRequired,
   isSaveBtnDisabled: PropTypes.bool,
+  showModal: PropTypes.bool,
 }
 
 export default Modal

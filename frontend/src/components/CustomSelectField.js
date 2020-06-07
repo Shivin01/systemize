@@ -12,10 +12,11 @@ function CustomSelectField({
   onChangeHelper = null,
   required = false,
   render = null,
-  className = 'mb-4',
+  className = 'w-full px-3',
   options = [],
   selectProps = {},
   isClearable = false,
+  helpText = '',
   ...rest
 }) {
   return (
@@ -27,7 +28,7 @@ function CustomSelectField({
       }) => (
         <div className={className}>
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
             htmlFor={fieldName}
           >
             {label || parseHeader(fieldName)}
@@ -45,13 +46,13 @@ function CustomSelectField({
             }}
             onBlur={() => setFieldTouched(field.name, true)}
             value={getSelectedValue(options, field.value)}
-            className={`form-control-select ${
-              error && touched && 'is-invalid'
-            }`}
             isClearable={isClearable}
             isError={error && touched}
             {...selectProps}
           />
+          {helpText ? (
+            <p className="text-gray-600 text-xs italic">{helpText}</p>
+          ) : null}
           <ErrorMessage name={fieldName} component={FormError} />
         </div>
       )}
@@ -70,6 +71,7 @@ CustomSelectField.propTypes = {
   options: PropTypes.array,
   selectProps: PropTypes.object,
   isClearable: PropTypes.bool,
+  helpText: PropTypes.string,
 }
 
 export default CustomSelectField

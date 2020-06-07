@@ -3,10 +3,11 @@ import React, {useState} from 'react'
 const UserContext = React.createContext({users: []})
 UserContext.displayName = 'AuthContext'
 
-
 export function UsersProvider(props) {
-  const [userDetails, setUserDetails] = useState({});
-  return <UserContext.Provider value={{userDetails, setUserDetails}} {...props} />
+  const [userDetails, setUserDetails] = useState({})
+  return (
+    <UserContext.Provider value={{userDetails, setUserDetails}} {...props} />
+  )
 }
 
 export function useUsers() {

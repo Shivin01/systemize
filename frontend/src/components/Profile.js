@@ -5,9 +5,9 @@ import {useEffect, useState} from 'react'
 
 import editSvg from '../images/Vector.svg'
 import personSvg from '../images/person.svg'
-import axiosInstance from "../utils/axiosInsance";
-import UpdateProfile from "./UpdateProfile";
-import CustomPieChart from "./piechart";
+import axiosInstance from '../utils/axiosInsance'
+import UpdateProfile from './UpdateProfile'
+import CustomPieChart from './piechart'
 
 function Profile() {
   const [showModal, setShowModal] = useState(false)
@@ -16,29 +16,35 @@ function Profile() {
   const [barChartData, setBarChartData] = useState({})
 
   useEffect(() => {
-    axiosInstance.get('/users/user_profile/')
+    axiosInstance
+      .get('/users/user_profile/')
       .then(function (response) {
         if (response.data && response.data.length) {
           setUserDetails(response.data[0])
         }
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error)
       })
 
-    axiosInstance.get('http://localhost:8000/users/pie_chart_data/')
+    axiosInstance
+      .get('http://localhost:8000/users/pie_chart_data/')
       .then(function (response) {
         setPieChartData(response.data)
       })
-      .catch(function (error) {console.log(error)})
+      .catch(function (error) {
+        console.log(error)
+      })
 
-    axiosInstance.get('http://localhost:8000/users/bar_chart_data/')
+    axiosInstance
+      .get('http://localhost:8000/users/bar_chart_data/')
       .then(function (response) {
         setBarChartData(response.data)
       })
-      .catch(function (error) {console.log(error)})
-
-  }, []);
+      .catch(function (error) {
+        console.log(error)
+      })
+  }, [])
 
   const {
     first_name,
@@ -48,7 +54,7 @@ function Profile() {
     current_organization,
     guest_organizations,
     phone,
-    timezone
+    timezone,
   } = userDetails
 
   return (
@@ -112,46 +118,50 @@ function Profile() {
               </h3>
               <table className="table mt-2 text-sm">
                 <tbody>
-                {phone ? (
+                  {phone ? (
+                    <tr>
+                      <td>Phone:</td>
+                      <td className="text-blue-400 pl-3">{phone}</td>
+                    </tr>
+                  ) : null}
                   <tr>
-                    <td>Phone:</td>
-                    <td className="text-blue-400 pl-3">{phone}</td>
+                    <td>Email:</td>
+                    <td className="pl-3">{email}</td>
                   </tr>
-                ) : null}
-                <tr>
-                  <td>Email:</td>
-                  <td className="pl-3">{email}</td>
-                </tr>
-                <tr>
-                  <td>Timezone:</td>
-                  <td className="pl-3">{timezone ? timezone : 'None'}</td>
-                </tr>
+                  <tr>
+                    <td>Timezone:</td>
+                    <td className="pl-3">{timezone ? timezone : 'None'}</td>
+                  </tr>
                 </tbody>
               </table>
 
-              <h3 className="mt-4 uppercase text-xs text-gray-600">
-                Work
-              </h3>
+              <h3 className="mt-4 uppercase text-xs text-gray-600">Work</h3>
               <table className="table mt-2 text-sm">
                 <tbody>
-                <tr>
-                  <td>Organization:</td>
-                  <td
-                    className="text-blue-400 pl-3">{current_organization ? current_organization : 'None'}</td>
-                </tr>
-                {guest_organizations && guest_organizations.length ? (
                   <tr>
-                    <td>Guest Organizations:</td>
-                    <td className="pl-3">{guest_organizations.reduce((acc, org) => `${acc}, ${org}`, '')}</td>
+                    <td>Organization:</td>
+                    <td className="text-blue-400 pl-3">
+                      {current_organization ? current_organization : 'None'}
+                    </td>
                   </tr>
-                ) : null}
+                  {guest_organizations && guest_organizations.length ? (
+                    <tr>
+                      <td>Guest Organizations:</td>
+                      <td className="pl-3">
+                        {guest_organizations.reduce(
+                          (acc, org) => `${acc}, ${org}`,
+                          '',
+                        )}
+                      </td>
+                    </tr>
+                  ) : null}
                 </tbody>
               </table>
               <CustomPieChart
-              pieChartData={pieChartData}
-              ColumnChartNew={barChartData.new}
-              ColumnChartInprogress={barChartData.in_progress}
-              ColumnChartCompleted={barChartData.completed}
+                pieChartData={pieChartData}
+                ColumnChartNew={barChartData.new}
+                ColumnChartInprogress={barChartData.in_progress}
+                ColumnChartCompleted={barChartData.completed}
               />
             </div>
           </div>

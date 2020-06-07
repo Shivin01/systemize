@@ -2,12 +2,11 @@ import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import cs from 'classnames'
 
-import {status, activeTab} from "../constants";
-import CreateTask from "./CreateTask";
-import {useAllUsers} from "../contexts/all-users";
+import {status, activeTab} from '../constants'
+import CreateTask from './CreateTask'
+import {useAllUsers} from '../contexts/all-users'
 
 function Task({status, task, setActiveTask}) {
-
   return (
     <div
       className="inline-flex p-3 rounded w-full mt-2 items-center justify-between hover:bg-gray-300 cursor-pointer"
@@ -31,7 +30,9 @@ Task.propTypes = {
 function TaskGroup({status, tasks, showStatus = true, setActiveTask}) {
   return (
     <div className="mt-5">
-      {showStatus && <h2 className="uppercase text-gray-700 font-medium">{status}</h2>}
+      {showStatus && (
+        <h2 className="uppercase text-gray-700 font-medium">{status}</h2>
+      )}
       <div className="mt-3">
         {tasks.map(task => (
           <Task status={status} task={task} setActiveTask={setActiveTask} />
@@ -63,26 +64,38 @@ function UserTasks({tasks}) {
   return (
     <div>
       <ul className="flex border-b mt-10">
-        <li className={cs("mr-1", {
-          "-mb-px": active === activeTab.WORKED_ON
-        })}>
+        <li
+          className={cs('mr-1', {
+            '-mb-px': active === activeTab.WORKED_ON,
+          })}
+        >
           <a
-            className={cs("bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold", {
-              'border-l border-t border-r rounded-t': active === activeTab.WORKED_ON
-            })}
+            className={cs(
+              'bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold',
+              {
+                'border-l border-t border-r rounded-t':
+                  active === activeTab.WORKED_ON,
+              },
+            )}
             onClick={() => setActive(activeTab.WORKED_ON)}
             href="#fdsfd"
           >
             Worked On
           </a>
         </li>
-        <li className={cs("mr-1", {
-          "-mb-px": active === activeTab.ASSIGNED
-        })}>
+        <li
+          className={cs('mr-1', {
+            '-mb-px': active === activeTab.ASSIGNED,
+          })}
+        >
           <a
-            className={cs("bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold", {
-              'border-l border-t border-r rounded-t': active === activeTab.ASSIGNED
-            })}
+            className={cs(
+              'bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold',
+              {
+                'border-l border-t border-r rounded-t':
+                  active === activeTab.ASSIGNED,
+              },
+            )}
             onClick={() => setActive(activeTab.ASSIGNED)}
             href="#ome"
           >
@@ -91,12 +104,25 @@ function UserTasks({tasks}) {
         </li>
       </ul>
       {active === activeTab.ASSIGNED ? (
-          <>
-            <TaskGroup setActiveTask={setActiveTask} status="In Progress" tasks={inProgressTasks} />
-            <TaskGroup setActiveTask={setActiveTask} status="New" tasks={newTasks} />
-          </>
+        <>
+          <TaskGroup
+            setActiveTask={setActiveTask}
+            status="In Progress"
+            tasks={inProgressTasks}
+          />
+          <TaskGroup
+            setActiveTask={setActiveTask}
+            status="New"
+            tasks={newTasks}
+          />
+        </>
       ) : (
-        <TaskGroup setActiveTask={setActiveTask} showStatus={false} status="Completed" tasks={completedTasks} />
+        <TaskGroup
+          setActiveTask={setActiveTask}
+          showStatus={false}
+          status="Completed"
+          tasks={completedTasks}
+        />
       )}
       {activeTask ? (
         <CreateTask

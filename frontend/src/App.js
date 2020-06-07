@@ -9,7 +9,7 @@ import NavBar from './components/NavBar'
 import Profile from './components/Profile'
 import PublicRoute from './components/Route/PublicRoute'
 import PrivateRoute from './components/Route/PrivateRoute'
-import {UsersProvider} from "./contexts/user";
+import {UsersProvider} from './contexts/user'
 
 import 'izitoast/dist/css/iziToast.min.css'
 import './style.css'
@@ -19,15 +19,15 @@ iziToast.settings({
   icon: 'material-icons',
   transitionIn: 'flipInX',
   transitionOut: 'flipOutX',
-  position: 'topRight'
-});
+  position: 'topRight',
+})
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const location = useLocation()
 
   useEffect(() => {
-    const item = window.localStorage.getItem('token');
+    const item = window.localStorage.getItem('token')
     const token = item ? JSON.parse(item) : null
     if (token) {
       setLoggedIn(true)

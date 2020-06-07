@@ -13,9 +13,15 @@ import CustomField from './CustomField'
 import CustomSelectField from './CustomSelectField'
 import {createTask, updateTask} from '../utils/api'
 import FormError from './FormError'
-import ModalFooter from "./ModalFooter";
+import ModalFooter from './ModalFooter'
 
-function CreateTask({task = {}, setShowModal, showModal, isFetchingUser, users}) {
+function CreateTask({
+  task = {},
+  setShowModal,
+  showModal,
+  isFetchingUser,
+  users,
+}) {
   const initialValues = {
     name: task.name || '',
     description: task.description || '',
@@ -107,12 +113,7 @@ function CreateTask({task = {}, setShowModal, showModal, isFetchingUser, users})
       })}
       onSubmit={onSubmit}
     >
-      {({
-          setFieldTouched,
-          setFieldValue,
-          dirty,
-          isSubmitting,
-        }) => (
+      {({setFieldTouched, setFieldValue, dirty, isSubmitting}) => (
         <Modal
           setShowModal={setShowModal}
           heading={task.id ? 'Update Task' : 'Create Task'}
@@ -123,10 +124,10 @@ function CreateTask({task = {}, setShowModal, showModal, isFetchingUser, users})
           <Form>
             <div className="p-6 overflow-auto">
               <div className="flex flex-wrap -mx-3 mb-6">
-                <CustomField fieldName="name" required/>
+                <CustomField fieldName="name" required />
               </div>
               <div className="flex flex-wrap -mx-3 mb-6">
-                <CustomField fieldName="description" type="textarea"/>
+                <CustomField fieldName="description" type="textarea" />
               </div>
               <div className="flex flex-wrap -mx-3 mb-6">
                 <CustomSelectField
@@ -172,11 +173,14 @@ function CreateTask({task = {}, setShowModal, showModal, isFetchingUser, users})
                       setFieldTouched('dueDate', true)
                     }}
                   />
-                  <ErrorMessage name="dueDate" component={FormError}/>
+                  <ErrorMessage name="dueDate" component={FormError} />
                 </div>
               </div>
             </div>
-            <ModalFooter setShowModal={setShowModal} isDisabled={isSubmitting || !dirty} />
+            <ModalFooter
+              setShowModal={setShowModal}
+              isDisabled={isSubmitting || !dirty}
+            />
           </Form>
         </Modal>
       )}

@@ -1,6 +1,6 @@
 import React from 'react'
-import {useQuery} from "react-query";
-import axiosInstance from "../utils/axiosInsance";
+import {useQuery} from 'react-query'
+import axiosInstance from '../utils/axiosInsance'
 
 const UserContext = React.createContext({users: []})
 UserContext.displayName = 'AuthContext'
@@ -13,7 +13,7 @@ export function UsersProvider(props) {
   const userResponse = useQuery('users', fetchUsers, {
     refetchInterval: false,
     retry: false,
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
   })
 
   return <UserContext.Provider value={{users: userResponse.data}} {...props} />

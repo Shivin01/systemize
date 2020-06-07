@@ -5,7 +5,7 @@ import Logo from '../images/Logo.svg'
 import BackgroundShape from '../images/Shape.svg'
 import Image from '../images/image.svg'
 import SignupForm from './SignupForm'
-import { withRouter } from 'react-router';
+import {withRouter} from 'react-router'
 
 function Signup(props) {
   console.log(props.history)
@@ -53,9 +53,7 @@ function Signup(props) {
             </div>
             <div className="mt-16 w-full">
               <span className="uppercase text-2xl">Signup</span>
-              <SignupForm
-              history={props.history}
-              />
+              <SignupForm history={props.history} />
             </div>
           </div>
           <div

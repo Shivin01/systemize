@@ -11,7 +11,8 @@ function CustomField({
   onChangeHelper = null,
   required = false,
   render = null,
-  className = 'mb-4',
+  className = 'w-full px-3',
+  helpText = '',
   ...rest
 }) {
   return (
@@ -30,25 +31,42 @@ function CustomField({
       {({field}) => (
         <div className={className}>
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
             htmlFor={fieldName}
           >
             {label || parseHeader(fieldName)}
             {required && <span className="text-orange-800">*</span>}
             {render && render()}
           </label>
-          <input
-            {...field}
-            type={type}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            onChange={e => {
-              field.onChange(e)
-              if (onChangeHelper) {
-                onChangeHelper(e.target.value)
-              }
-            }}
-            autoComplete={type === 'password' ? 'new-password' : null}
-          />
+          {type === 'textarea' ? (
+            <textarea
+              {...field}
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              onChange={e => {
+                field.onChange(e)
+                if (onChangeHelper) {
+                  onChangeHelper(e.target.value)
+                }
+              }}
+              autoComplete={type === 'password' ? 'new-password' : null}
+            />
+          ) : (
+            <input
+              {...field}
+              type={type}
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              onChange={e => {
+                field.onChange(e)
+                if (onChangeHelper) {
+                  onChangeHelper(e.target.value)
+                }
+              }}
+              autoComplete={type === 'password' ? 'new-password' : null}
+            />
+          )}
+          {helpText ? (
+            <p className="text-gray-600 text-xs italic">{helpText}</p>
+          ) : null}
           <ErrorMessage name={fieldName} component={FormError} />
         </div>
       )}
@@ -64,6 +82,7 @@ CustomField.propTypes = {
   render: PropTypes.func,
   type: PropTypes.string,
   className: PropTypes.string,
+  helpText: PropTypes.string,
 }
 
 export default CustomField

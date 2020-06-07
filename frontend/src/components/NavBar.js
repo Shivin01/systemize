@@ -2,13 +2,26 @@
 /** @jsxFrag React.Fragment */
 import {css, jsx} from '@emotion/core'
 import {useState, Fragment} from 'react'
+import {Link, NavLink} from 'react-router-dom'
 
 import Logo from '../images/Logo.svg'
 import CreateTask from './CreateTask'
-import {Link, NavLink} from "react-router-dom";
+import {useQuery} from 'react-query'
+import {getUsersWithParams} from '../utils/api'
 
 function NavBar() {
   const [showModal, setShowModal] = useState(false)
+  const {data, isFetching, refetch} = useQuery(
+    ['organization-users', {}],
+    getUsersWithParams,
+    {
+      refetchInterval: false,
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+  )
+
+  console.log(data)
 
   return (
     <Fragment>
@@ -31,10 +44,21 @@ function NavBar() {
                   to="/"
                   activeStyle={{
                     borderBottom: '3px solid #000000',
-                    paddingBottom: 3
+                    paddingBottom: 3,
                   }}
                 >
                   Your Tasks
+                </NavLink>
+                <NavLink
+                  className="ml-4"
+                  exact
+                  to="/all-tasks"
+                  activeStyle={{
+                    borderBottom: '3px solid #000000',
+                    paddingBottom: 3,
+                  }}
+                >
+                  All Tasks
                 </NavLink>
               </div>
               <div className="mr-4">
@@ -59,7 +83,9 @@ function NavBar() {
           </nav>
         </div>
       </div>
-      {showModal ? <CreateTask setShowModal={setShowModal} /> : null}
+      {showModal ? (
+        <CreateTask setShowModal={setShowModal} showModal={showModal} />
+      ) : null}
     </Fragment>
   )
 }

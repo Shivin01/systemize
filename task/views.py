@@ -1,7 +1,8 @@
 from rest_framework import viewsets
 from rest_framework.authentication import (
     SessionAuthentication,
-    BasicAuthentication
+    BasicAuthentication,
+    TokenAuthentication,
 )
 
 from task.serializer import (
@@ -18,13 +19,13 @@ class CsrfExemptSessionAuthentication(SessionAuthentication):
 
 
 class TaskViewSet(viewsets.ModelViewSet):
-    authentication_classes = (SessionAuthentication, BasicAuthentication)
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication, TokenAuthentication)
     serializer_class = TaskSerializer
     queryset = Task.objects.all()
 
 
 class CommentViewSet(viewsets.ModelViewSet):
-    authentication_classes = (SessionAuthentication, BasicAuthentication)
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication, TokenAuthentication)
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
 

@@ -1,8 +1,6 @@
 import React from 'react'
-import cs from 'classnames'
 import ReactModal from 'react-modal'
 import PropTypes from 'prop-types'
-import ModalFooter from './ModalFooter'
 import ModalHeader from './ModalHeader'
 
 ReactModal.setAppElement('#root')
@@ -27,11 +25,9 @@ function Modal({
   setShowModal,
   showModal = false,
   heading = null,
-  saveBtnText = 'Save',
   children,
-  isSaveBtnDisabled = false,
 }) {
-  return console.log('isSaveBtnDisabled', isSaveBtnDisabled) || (
+  return (
     <ReactModal
       isOpen={showModal}
       onRequestClose={() => setShowModal(false)}
@@ -39,12 +35,7 @@ function Modal({
       contentLabel="Example Modal"
     >
       <ModalHeader setShowModal={setShowModal} heading={heading} />
-      <div className="p-6 overflow-auto">{children}</div>
-      <ModalFooter
-        setShowModal={setShowModal}
-        isDisabled={isSaveBtnDisabled}
-        saveBtnText={saveBtnText}
-      />
+      {children}
     </ReactModal>
   )
 }
@@ -52,9 +43,7 @@ function Modal({
 Modal.propTypes = {
   setShowModal: PropTypes.func.isRequired,
   heading: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  saveBtnText: PropTypes.string,
   children: PropTypes.node.isRequired,
-  isSaveBtnDisabled: PropTypes.bool,
   showModal: PropTypes.bool,
 }
 

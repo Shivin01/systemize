@@ -6,22 +6,13 @@ import {Link, NavLink, useHistory} from 'react-router-dom'
 
 import Logo from '../images/Logo.svg'
 import CreateTask from './CreateTask'
-import {useQuery} from 'react-query'
-import {getUsersWithParams} from '../utils/api'
 import useLocalStorage from "../hooks/useLocalStorage";
+import {useAllUsers} from "../contexts/all-users";
 
 function NavBar() {
   const [showModal, setShowModal] = useState(false)
   const [, setValue] = useLocalStorage('token')
-  const {data: response, isFetching} = useQuery(
-    ['organization-users', {}],
-    getUsersWithParams,
-    {
-      refetchInterval: false,
-      retry: false,
-      refetchOnWindowFocus: false,
-    },
-  )
+  const {users, isFetching} = useAllUsers()
   const history = useHistory()
 
   return (
@@ -104,7 +95,7 @@ function NavBar() {
           setShowModal={setShowModal}
           showModal={showModal}
           isFetchingUser={isFetching}
-          users={response.data}
+          users={users}
         />
       ) : null}
     </Fragment>

@@ -26,7 +26,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
                   'username',
                   'first_name',
                   'last_name',
-                  'email'
+                  'email',
+                  'id'
                   )
 
     def get_username(self, obj):
@@ -48,6 +49,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         print(self.context)
         super().save()
         self.context['request'].user.assets.add(self.instance)
+
 
 class OrganizationSerializer(BaseSerializer):
     class Meta:

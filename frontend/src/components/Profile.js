@@ -6,10 +6,11 @@ import {useEffect, useState} from 'react'
 import editSvg from '../images/Vector.svg'
 import personSvg from '../images/person.svg'
 import axiosInstance from "../utils/axiosInsance";
+import UpdateProfile from "./UpdateProfile";
 import CustomPieChart from "./piechart";
 
 function Profile() {
-  const [, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const [userDetails, setUserDetails] = useState({})
   const [pieChartData, setPieChartData] = useState([])
   const [barChartData, setBarChartData] = useState({})
@@ -156,6 +157,13 @@ function Profile() {
           </div>
         </div>
       </div>
+      {showModal ? (
+        <UpdateProfile
+          setShowModal={setShowModal}
+          showModal={showModal}
+          userDetails={userDetails}
+        />
+      ) : null}
     </section>
   )
 }

@@ -1,14 +1,14 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 import {jsx} from '@emotion/core'
-import {useEffect, useState} from 'react'
 import {useQuery} from 'react-query'
+import queryString from 'query-string'
 
 import UserTasks from './UserTasks'
 import {getTasksWithParams} from '../utils/api'
 
 function Home() {
-  const {data, isFetching, refetch} = useQuery(
+  const {data: response, isFetching} = useQuery(
     ['user-tasks', {}],
     getTasksWithParams,
     {
@@ -22,7 +22,9 @@ function Home() {
     <section className="h-screen pt-24">
       <div className="container m-auto">
         <h1 className="text-3xl font-semibold my-5">Your Tasks</h1>
-        <UserTasks />
+        {isFetching ? 'loading...' : (
+          <UserTasks tasks={response.data} />
+        )}
       </div>
     </section>
   )

@@ -1,15 +1,51 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 import {css, jsx} from '@emotion/core'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 
-import ProfileImage from '../images/Ellipse.png'
+// import ProfileImage from '../images/Ellipse.png'
 import editSvg from '../images/Vector.svg'
 import locationSvg from '../images/location.svg'
 import personSvg from '../images/person.svg'
+import axiosInstance from "../utils/axiosInsance";
+const axios = require('axios').default;
+
 
 function Profile() {
   const [, setShowModal] = useState(false)
+  const [userDetails, setUserDetails] = useState({})
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    axiosInstance.get('http://localhost:8000/users/user_profile/')
+      .then(function (response) {
+        // handle success
+        console.log(response);
+        if (response.data) {
+          console.log(response.data);
+          setUserDetails(response.data)
+        }
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+
+  },[]);
+
+  function fetchUsername() {
+    // console.log(username)
+    // console.log(username)
+    console.log(userDetails)
+    return userDetails.first_name ? userDetails.first_name : userDetails.username
+  }
+
+
+  //
+  // const item = window.localStorage.getItem('token');
+  // const token = item ? JSON.parse(item) : null
+  // console.log(token)
+  // axiosInstance.get('http://localhost:8000/users/user_profile/')
 
   return (
     <section className="h-screen pt-40">
@@ -19,7 +55,7 @@ function Profile() {
             <div className="w-64 h-64 mb-6">
               <img
                 className="m-auto rounded-full"
-                src={ProfileImage}
+                src={userDetails.profile_image}
                 alt="sdfs"
               />
             </div>
@@ -29,15 +65,15 @@ function Profile() {
             <div className="flex justify-between flex-wrap">
               <div>
                 <h1 className="block text-4xl font-medium pt-0 pl-0 text-gray-700">
-                  John Doe
-                  <span className="inline-block font-normal text-xs text-gray-500 pl-6">
-                    <img
-                      className="inline-block w-4 h-4 pb-1"
-                      src={locationSvg}
-                      alt="location"
-                    />
-                    Location
-                  </span>
+                  { fetchUsername() }
+                  {/*<span className="inline-block font-normal text-xs text-gray-500 pl-6">*/}
+                  {/*  <img*/}
+                  {/*    className="inline-block w-4 h-4 pb-1"*/}
+                  {/*    src={locationSvg}*/}
+                  {/*    alt="location"*/}
+                  {/*  />*/}
+                  {/*  Location*/}
+                  {/*</span>*/}
                 </h1>
                 <span
                   className="block text-xs font-normal"
@@ -45,7 +81,7 @@ function Profile() {
                     color: #15aad9;
                   `}
                 >
-                  Designation
+                  {userDetails.username}
                 </span>
               </div>
               <div className="pt-2" onClick={() => setShowModal(true)}>

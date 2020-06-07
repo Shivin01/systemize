@@ -1,6 +1,5 @@
-import React, {useState, useEffect, Fragment} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Switch, useLocation} from 'react-router-dom'
-
 import Login from './components/Login'
 import Signup from './components/Signup'
 import Home from './components/Home'
@@ -9,13 +8,14 @@ import Profile from './components/Profile'
 import PublicRoute from './components/Route/PublicRoute'
 import PrivateRoute from './components/Route/PrivateRoute'
 import AllTasks from './components/AllTasks'
+import {UsersProvider} from "./contexts/user";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const location = useLocation()
 
   useEffect(() => {
-    const item = window.localStorage.getItem('token')
+    const item = window.localStorage.getItem('token');
     const token = item ? JSON.parse(item) : null
     if (token) {
       setLoggedIn(true)
@@ -25,7 +25,7 @@ function App() {
   }, [location])
 
   return (
-    <Fragment>
+    <UsersProvider>
       {loggedIn && <NavBar />}
       <Switch>
         <PublicRoute path="/login" component={Login} />
@@ -34,7 +34,7 @@ function App() {
         <PrivateRoute path="/all-tasks" component={AllTasks} />
         <PrivateRoute path="/" component={Home} />
       </Switch>
-    </Fragment>
+    </UsersProvider>
   )
 }
 

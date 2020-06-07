@@ -10,6 +10,8 @@ import PrivateRoute from './components/Route/PrivateRoute'
 import AllTasks from './components/AllTasks'
 import {UsersProvider} from "./contexts/user";
 
+import './style.css'
+
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const location = useLocation()

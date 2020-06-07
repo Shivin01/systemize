@@ -2,15 +2,17 @@
 /** @jsxFrag React.Fragment */
 import {css, jsx} from '@emotion/core'
 import {useState, Fragment} from 'react'
-import {Link, NavLink} from 'react-router-dom'
+import {Link, NavLink, useHistory} from 'react-router-dom'
 
 import Logo from '../images/Logo.svg'
 import CreateTask from './CreateTask'
 import {useQuery} from 'react-query'
 import {getUsersWithParams} from '../utils/api'
+import useLocalStorage from "../hooks/useLocalStorage";
 
 function NavBar() {
   const [showModal, setShowModal] = useState(false)
+  const [, setValue] = useLocalStorage('token')
   const {data: response, isFetching} = useQuery(
     ['organization-users', {}],
     getUsersWithParams,
@@ -20,6 +22,7 @@ function NavBar() {
       refetchOnWindowFocus: false,
     },
   )
+  const history = useHistory()
 
   return (
     <Fragment>
@@ -76,7 +79,22 @@ function NavBar() {
                   Create
                 </button>
               </div>
-              <div className="w-12 h-12 rounded-full bg-green-900 border-gray-600 border-4 ml-4 shadow-sm" />
+              <div className="dropdown inline-block relative">
+                <div className="w-12 h-12 rounded-full bg-green-900 border-gray-600 border-4 ml-4 shadow-sm cursor-pointer" />
+                <div className="dropdown-menu hidden w-48 h-auto absolute r-0 bg-white rounded shadow-lg hover:shadow-2xl z-10">
+                  <span className="block uppercase font-semibold p-2 text-xs text-gray-600">John Doe</span>
+                  <Link to="/profile" className="block font-normal text-base text-gray-900 px-2 py-3 hover:bg-gray-300 cursor-pointer">Profile</Link>
+                  <span
+                    className="block font-normal text-base text-gray-900 px-2 py-3 border-gray-500 border-t-2 hover:bg-gray-300 cursor-pointer"
+                    onClick={() => {
+                      setValue('')
+                      history.push('/login')
+                    }}
+                  >
+                    Sign Out
+                  </span>
+                </div>
+              </div>
             </div>
           </nav>
         </div>

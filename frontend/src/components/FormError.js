@@ -9,4 +9,4 @@ FormError.propTypes = {
   children: PropTypes.string.isRequired,
 }
 
-export default FormError
+export default FormError;

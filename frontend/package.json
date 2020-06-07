@@ -13,6 +13,8 @@
     "camelcase": "^6.0.0",
     "classnames": "^2.2.6",
     "formik": "^2.1.4",
+    "highcharts": "^8.1.0",
+    "highcharts-react-official": "^3.0.0",
     "izitoast": "^1.4.0",
     "js-cookie": "^2.2.1",
     "memoize-one": "^5.1.1",

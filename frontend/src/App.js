@@ -9,7 +9,6 @@ import PublicRoute from './components/Route/PublicRoute'
 import PrivateRoute from './components/Route/PrivateRoute'
 import AllTasks from './components/AllTasks'
 import {UsersProvider} from "./contexts/user";
-
 import './style.css'
 
 function App() {

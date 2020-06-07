@@ -6,10 +6,13 @@ import {useEffect, useState} from 'react'
 import editSvg from '../images/Vector.svg'
 import personSvg from '../images/person.svg'
 import axiosInstance from "../utils/axiosInsance";
+import CustomPieChart from "./piechart";
 
 function Profile() {
   const [, setShowModal] = useState(false)
   const [userDetails, setUserDetails] = useState({})
+  const [pieChartData, setPieChartData] = useState([])
+  const [barChartData, setBarChartData] = useState({})
 
   useEffect(() => {
     axiosInstance.get('/users/user_profile/')
@@ -22,9 +25,23 @@ function Profile() {
         console.log(error);
       })
 
+    axiosInstance.get('http://localhost:8000/users/pie_chart_data/')
+      .then(function (response) {
+        console.log(response.data)
+        setPieChartData(response.data)
+      })
+      .catch(function (error) {console.log(error)})
+
+    axiosInstance.get('http://localhost:8000/users/bar_chart_data/')
+      .then(function (response) {
+        console.log(response.data)
+        setBarChartData(response.data)
+      })
+      .catch(function (error) {console.log(error)})
+
   }, []);
 
-  console.log(userDetails)
+  console.log(barChartData)
 
   const {
     first_name,
@@ -133,6 +150,12 @@ function Profile() {
                 ) : null}
                 </tbody>
               </table>
+              <CustomPieChart
+              pieChartData={pieChartData}
+              ColumnChartNew={barChartData.new}
+              ColumnChartInprogress={barChartData.in_progress}
+              ColumnChartCompleted={barChartData.completed}
+              />
             </div>
           </div>
         </div>

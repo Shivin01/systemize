@@ -63,18 +63,18 @@ function Profile() {
         <div className="flex w-full">
           <div className="flex flex-col mr-16">
             <div className="w-64 h-64 mb-6">
-              <img
-                className="m-auto rounded-full"
-                src={userDetails.profile_image}
-                alt="user image"
-              />
+              {/*<img*/}
+              {/*  className="m-auto rounded-full"*/}
+              {/*  // src={userDetails.profile_image}*/}
+              {/*  alt="user image"*/}
+              {/*/>*/}
             </div>
           </div>
           <div className="w-full">
             <div className="flex justify-between flex-wrap">
               <div>
                 <h1 className="block text-4xl font-medium pt-0 pl-0 text-gray-700">
-                  {first_name ? `${first_name} ${last_name}` : 'No Name'}
+                  {first_name ? `${first_name} ${last_name}` : `${username}` }
                 </h1>
                 <span
                   className="block text-xs font-normal"
@@ -172,6 +172,7 @@ function Profile() {
           setShowModal={setShowModal}
           showModal={showModal}
           userDetails={userDetails}
+          setUserDetails={setUserDetails}
         />
       ) : null}
     </section>

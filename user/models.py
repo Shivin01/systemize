@@ -36,3 +36,8 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    # def save(self, *args, **kwargs):
+    #     print(kwargs)
+    #     user = self.user
+    #     kwargs.get('first_name', user.first_name),

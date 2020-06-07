@@ -35,7 +35,7 @@ export function updateTask(taskId, data) {
 export function updateProfile(profileId, data) {
   return axiosInstance({
     method: 'PATCH',
-    url: `/users/user_profile/${profileId}/`,
+    url: `http://localhost:8000/users/user_profile/${profileId}/`,
     data,
   })
 }

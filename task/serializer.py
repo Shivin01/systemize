@@ -1,5 +1,6 @@
+import pytz
 from rest_framework import serializers
-from datetime import datetime
+from datetime import datetime, timezone
 
 from task.models import Task, Comment
 from user.models import User
@@ -37,8 +38,36 @@ class BaseSerializer(serializers.ModelSerializer):
     updated_at = ReadOnlyTimestampField()
 
 
+class TimestampField(serializers.Field):
+    def to_representation(self, value):
+        return TimeUtils.to_epoch(value)
+
+    def to_internal_value(self, value):
+        return TimeUtils.parse_telemetry_ts(value)
+
+
+class TimeUtils(object):
+    MICROSECONDS_GRANULARITY = "%y%m%d%H%M%S%f"
+
+    @classmethod
+    def to_epoch(cls, dt):
+        """
+        """
+        return int(dt.timestamp() * 1000.)
+
+    @classmethod
+    def parse_telemetry_ts(cls, ts, time_zone='UTC'):
+        """
+        """
+        user_tz = timezone(time_zone)
+        return pytz.utc.localize(
+                datetime.utcfromtimestamp(float(str(ts)) / 1000.)
+        ).astimezone(user_tz)
+
+
 class TaskSerializer(BaseSerializer):
-    due_date = ReadOnlyTimestampField()
+
+    due_date = TimestampField()
 
     class Meta:
         model = Task

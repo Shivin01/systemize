@@ -37,15 +37,15 @@ class UserProfileView(viewsets.ModelViewSet):
         user_profile = UserProfile.objects.filter(user=user)
         return user_profile
 
-    def create(self, request):
+    def update(self, request, *args, **kwargs):
         """
         Over writing create method.
         :param request:
         :return:
         """
-
         try:
-            serializer = self.get_serializer(data=request.data)
+            user_profile = UserProfile.objects.get(user=request.user)
+            serializer = self.get_serializer(user_profile, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
             data = {
@@ -61,6 +61,7 @@ class UserProfileView(viewsets.ModelViewSet):
             return Response(status=status.HTTP_400_BAD_REQUEST)
         except Exception:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 class OrganizationViewSet(viewsets.ModelViewSet):
     """

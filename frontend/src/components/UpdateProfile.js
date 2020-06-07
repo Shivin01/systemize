@@ -11,7 +11,7 @@ import ModalFooter from './ModalFooter'
 import iziToast from 'izitoast'
 import {updateProfile} from '../utils/api'
 
-function UpdateProfile({setShowModal, showModal, userDetails}) {
+function UpdateProfile({setShowModal, showModal, userDetails, setUserDetails}) {
   const initialValues = {
     firstName: userDetails.first_name,
     lastName: userDetails.last_name,
@@ -27,11 +27,13 @@ function UpdateProfile({setShowModal, showModal, userDetails}) {
     }
 
     updateProfile(userDetails.id, data)
-      .then(() => {
+      .then((response) => {
         iziToast.success({
           title: 'OK',
           message: 'Successfully updated profile!',
         })
+        setShowModal(false)
+        setUserDetails(response.data)
       })
       .catch(() => {
         iziToast.error({

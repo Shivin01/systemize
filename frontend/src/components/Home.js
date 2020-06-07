@@ -18,8 +18,6 @@ function Home() {
     },
   )
 
-  console.log(data, isFetching)
-
   return (
     <section className="h-screen pt-24">
       <div className="container m-auto">

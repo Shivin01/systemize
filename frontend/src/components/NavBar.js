@@ -11,7 +11,7 @@ import {getUsersWithParams} from '../utils/api'
 
 function NavBar() {
   const [showModal, setShowModal] = useState(false)
-  const {data, isFetching, refetch} = useQuery(
+  const {data: response, isFetching} = useQuery(
     ['organization-users', {}],
     getUsersWithParams,
     {
@@ -20,8 +20,6 @@ function NavBar() {
       refetchOnWindowFocus: false,
     },
   )
-
-  console.log(data)
 
   return (
     <Fragment>
@@ -84,7 +82,12 @@ function NavBar() {
         </div>
       </div>
       {showModal ? (
-        <CreateTask setShowModal={setShowModal} showModal={showModal} />
+        <CreateTask
+          setShowModal={setShowModal}
+          showModal={showModal}
+          isFetchingUser={isFetching}
+          users={response.data}
+        />
       ) : null}
     </Fragment>
   )

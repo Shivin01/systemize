@@ -12,14 +12,7 @@ function ModalFooter({setShowModal, saveBtnText = 'Save', isDisabled = false}) {
       >
         Cancel
       </button>
-      <button
-        className="bg-green-500 text-white active:bg-green-600 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-        type="submit"
-        style={{transition: 'all .15s ease'}}
-        disabled={isDisabled}
-      >
-        {saveBtnText}
-      </button>
+      <button type="submit">{saveBtnText}</button>
     </div>
   )
 }

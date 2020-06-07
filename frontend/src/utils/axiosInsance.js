@@ -5,7 +5,7 @@ const token = item ? JSON.parse(item) : null
 
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:8000',
-  headers: {Authorization: `Token ${token}`},
+  headers: {Authorization: `Bearer ${token}`},
 })
 
 // Since we will only be using JSON APIs, add Content-Type: application/json to header as default

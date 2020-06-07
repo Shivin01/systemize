@@ -1,13 +1,16 @@
-import React from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
+import cs from 'classnames'
 
-function Task({status}) {
+import {status, activeTab} from "../constants";
+
+function Task({status, task}) {
   return (
     <div className="inline-flex p-3 rounded w-full mt-2 items-center justify-between hover:bg-gray-300 cursor-pointer">
       <div className="bg-blue-900 rounded-full w-10 h-10" />
       <div className="mr-auto ml-4">
-        <p className="font-semibold">CI/CI pipeline for EDGE builds</p>
-        <span className="text-xs font-light">Due date: 12th June, 2020</span>
+        <p className="font-semibold">{task.name}</p>
+        <span className="text-xs font-light">Due date: {task.due_date}</span>
       </div>
       <span className="inline-block mr-2">{status}</span>
     </div>
@@ -16,17 +19,17 @@ function Task({status}) {
 
 Task.propTypes = {
   status: PropTypes.string.isRequired,
+  task: PropTypes.array.isRequired,
 }
 
-function TaskGroup({status}) {
+function TaskGroup({status, tasks, showStatus = true}) {
   return (
     <div className="mt-5">
-      <h2 className="uppercase text-gray-700 font-medium">{status}</h2>
+      {showStatus && <h2 className="uppercase text-gray-700 font-medium">{status}</h2>}
       <div className="mt-3">
-        <Task status={status} />
-        <Task status={status} />
-        <Task status={status} />
-        <Task status={status} />
+        {tasks.map(task => (
+          <Task status={status} task={task} />
+        ))}
       </div>
     </div>
   )
@@ -34,33 +37,65 @@ function TaskGroup({status}) {
 
 TaskGroup.propTypes = {
   status: PropTypes.string.isRequired,
+  tasks: PropTypes.array.isRequired,
+  showStatus: PropTypes.bool,
 }
 
-function UserTasks() {
+function getFilteredTasks(tasks, statusType) {
+  return tasks.filter(task => +task.status === +statusType)
+}
+
+function UserTasks({tasks}) {
+  const [active, setActive] = useState(activeTab.ASSIGNED)
+
+  const newTasks = getFilteredTasks(tasks, status.NEW)
+  const inProgressTasks = getFilteredTasks(tasks, status.IN_PROGRESS)
+  const completedTasks = getFilteredTasks(tasks, status.COMPLETED)
+
   return (
     <div>
       <ul className="flex border-b mt-10">
-        <li className="-mb-px mr-1">
+        <li className={cs("mr-1", {
+          "-mb-px": active === activeTab.WORKED_ON
+        })}>
           <a
-            className="bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-blue-700 font-semibold"
+            className={cs("bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold", {
+              'border-l border-t border-r rounded-t': active === activeTab.WORKED_ON
+            })}
+            onClick={() => setActive(activeTab.WORKED_ON)}
             href="#fdsfd"
           >
             Worked On
           </a>
         </li>
-        <li className="mr-1">
+        <li className={cs("mr-1", {
+          "-mb-px": active === activeTab.ASSIGNED
+        })}>
           <a
-            className="bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold"
+            className={cs("bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold", {
+              'border-l border-t border-r rounded-t': active === activeTab.ASSIGNED
+            })}
+            onClick={() => setActive(activeTab.ASSIGNED)}
             href="#ome"
           >
             Assigned to me
           </a>
         </li>
       </ul>
-      <TaskGroup status="In Progress" />
-      <TaskGroup status="New" />
+      {active === activeTab.ASSIGNED ? (
+          <>
+            <TaskGroup status="In Progress" tasks={inProgressTasks} />
+            <TaskGroup status="New" tasks={newTasks} />
+          </>
+      ) : (
+        <TaskGroup showStatus={false} status="Completed" tasks={completedTasks} />
+      )}
     </div>
   )
+}
+
+UserTasks.propTypes = {
+  tasks: PropTypes.array.isRequired,
 }
 
 export default UserTasks

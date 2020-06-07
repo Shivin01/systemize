@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 function ModalFooter({setShowModal, saveBtnText = 'Save', isDisabled = false}) {
   return (
-    <div className="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
+    <div className="flex items-center justify-end border-t p-6 border-solid border-gray-300 rounded-b">
       <button
         className="text-red-500 background-transparent font-bold px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
         type="button"
@@ -12,7 +12,14 @@ function ModalFooter({setShowModal, saveBtnText = 'Save', isDisabled = false}) {
       >
         Cancel
       </button>
-      <button className="button" type="submit" >{saveBtnText}</button>
+      <button
+        className="bg-green-500 text-white active:bg-green-600 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+        type="submit"
+        style={{transition: 'all .15s ease'}}
+        disabled={isDisabled}
+      >
+        {saveBtnText}
+      </button>
     </div>
   )
 }

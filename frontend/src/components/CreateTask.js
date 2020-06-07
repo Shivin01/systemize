@@ -13,6 +13,7 @@ import CustomField from './CustomField'
 import CustomSelectField from './CustomSelectField'
 import {createTask} from '../utils/api'
 import FormError from './FormError'
+import ModalFooter from "./ModalFooter";
 
 function CreateTask({setShowModal, showModal, isFetchingUser, users}) {
   const initialValues = {
@@ -25,8 +26,7 @@ function CreateTask({setShowModal, showModal, isFetchingUser, users}) {
     priority: 1,
   }
 
-  const onSubmit = (values, {setSubmitting, resetForm}) => {
-    console.log('here', values)
+  const onSubmit = (values, {setSubmitting}) => {
     setSubmitting(true)
     const data = {
       ...values,
@@ -40,7 +40,6 @@ function CreateTask({setShowModal, showModal, isFetchingUser, users}) {
           title: 'OK',
           message: 'Successfully created a task!',
         })
-        resetForm(initialValues)
         setShowModal(false)
       })
       .catch(() => {
@@ -89,35 +88,33 @@ function CreateTask({setShowModal, showModal, isFetchingUser, users}) {
         assignedTo: numberNullableField,
         priority: numberNullableField.required('Please enter a status'),
       })}
-      onSubmit={() => {
-        console.log('inside submit')
-      }}
+      onSubmit={onSubmit}
     >
       {({
-        setFieldTouched,
-        handleSubmit,
-        handleReset,
-        setFieldValue,
-        errors,
-        values,
-        touched,
-        dirty,
-        isSubmitting,
-      }) =>
-        console.log(values, errors, touched, dirty, isSubmitting) || (
-          <Modal
-            setShowModal={setShowModal}
-            heading="Create Task"
-            saveBtnText="Save"
-            isSaveBtnDisabled={isSubmitting || !dirty}
-            showModal={showModal}
-          >
-          <form onSubmit={handleSubmit} onReset={handleReset}>
+          setFieldTouched,
+          handleSubmit,
+          handleReset,
+          setFieldValue,
+          errors,
+          values,
+          touched,
+          dirty,
+          isSubmitting,
+        }) => (
+        <Modal
+          setShowModal={setShowModal}
+          heading="Create Task"
+          saveBtnText="Save"
+          isSaveBtnDisabled={isSubmitting || !dirty}
+          showModal={showModal}
+        >
+          <Form>
+            <div className="p-6 overflow-auto">
               <div className="flex flex-wrap -mx-3 mb-6">
-                <CustomField fieldName="name" required />
+                <CustomField fieldName="name" required/>
               </div>
               <div className="flex flex-wrap -mx-3 mb-6">
-                <CustomField fieldName="description" type="textarea" />
+                <CustomField fieldName="description" type="textarea"/>
               </div>
               <div className="flex flex-wrap -mx-3 mb-6">
                 <CustomSelectField
@@ -163,15 +160,14 @@ function CreateTask({setShowModal, showModal, isFetchingUser, users}) {
                       setFieldTouched('dueDate', true)
                     }}
                   />
-                  <ErrorMessage name="dueDate" component={FormError} />
+                  <ErrorMessage name="dueDate" component={FormError}/>
                 </div>
               </div>
-              <button type="submit" disabled={isSubmitting || !dirty}>save</button>
-          </form>
-          </Modal>
-
-        )
-      }
+            </div>
+            <ModalFooter setShowModal={setShowModal} isDisabled={isSubmitting || !dirty} />
+          </Form>
+        </Modal>
+      )}
     </Formik>
   )
 }

@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {Switch, useLocation} from 'react-router-dom'
+import iziToast from 'izitoast'
+
 import Login from './components/Login'
 import Signup from './components/Signup'
 import Home from './components/Home'
@@ -10,7 +12,16 @@ import PrivateRoute from './components/Route/PrivateRoute'
 import AllTasks from './components/AllTasks'
 import {UsersProvider} from "./contexts/user";
 
+import 'izitoast/dist/css/iziToast.min.css'
 import './style.css'
+
+iziToast.settings({
+  timeout: 10000,
+  icon: 'material-icons',
+  transitionIn: 'flipInX',
+  transitionOut: 'flipOutX',
+  position: 'topRight'
+});
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)

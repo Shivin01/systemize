@@ -6,8 +6,8 @@ import {Link, NavLink, useHistory} from 'react-router-dom'
 
 import Logo from '../images/Logo.svg'
 import CreateTask from './CreateTask'
-import useLocalStorage from "../hooks/useLocalStorage";
-import {useAllUsers} from "../contexts/all-users";
+import useLocalStorage from '../hooks/useLocalStorage'
+import {useAllUsers} from '../contexts/all-users'
 
 function NavBar() {
   const [showModal, setShowModal] = useState(false)
@@ -73,8 +73,15 @@ function NavBar() {
               <div className="dropdown inline-block relative">
                 <div className="w-12 h-12 rounded-full bg-green-900 border-gray-600 border-4 ml-4 shadow-sm cursor-pointer" />
                 <div className="dropdown-menu hidden w-48 h-auto absolute r-0 bg-white rounded shadow-lg hover:shadow-2xl z-10">
-                  <span className="block uppercase font-semibold p-2 text-xs text-gray-600">John Doe</span>
-                  <Link to="/profile" className="block font-normal text-base text-gray-900 px-2 py-3 hover:bg-gray-300 cursor-pointer">Profile</Link>
+                  <span className="block uppercase font-semibold p-2 text-xs text-gray-600">
+                    John Doe
+                  </span>
+                  <Link
+                    to="/profile"
+                    className="block font-normal text-base text-gray-900 px-2 py-3 hover:bg-gray-300 cursor-pointer"
+                  >
+                    Profile
+                  </Link>
                   <span
                     className="block font-normal text-base text-gray-900 px-2 py-3 border-gray-500 border-t-2 hover:bg-gray-300 cursor-pointer"
                     onClick={() => {

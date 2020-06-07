@@ -6,7 +6,7 @@ import * as Yup from 'yup'
 import FormError from './FormError'
 import useLocalStorage from '../hooks/useLocalStorage'
 import axios from 'axios'
-import {useUsers} from "../contexts/user";
+import {useUsers} from '../contexts/user'
 
 const loginSchema = Yup.object().shape({
   usernameOrEmail: Yup.string().required('Required'),
@@ -36,27 +36,27 @@ const LoginForm = ({history}) => {
           } else {
             data = {username: values.usernameOrEmail}
           }
-          axios.post('http://localhost:8000/rest-auth/login/',{
-            ...data,
-            'password': values.password
-          }).then( response => {
-            console.log(response.data)
-            if (getIn(response, 'data.token')) {
-              console.log(response.data.token)
-              if (getIn(response, 'data.user'))
-              {
-                console.log(response.data.user)
-                setUserDetails(response.data.user)
+          axios
+            .post('http://localhost:8000/rest-auth/login/', {
+              ...data,
+              password: values.password,
+            })
+            .then(response => {
+              console.log(response.data)
+              if (getIn(response, 'data.token')) {
+                console.log(response.data.token)
+                if (getIn(response, 'data.user')) {
+                  console.log(response.data.user)
+                  setUserDetails(response.data.user)
+                }
+                setValue(response.data.token)
+                history.push('/')
+              } else {
+                setValue('')
+                history.push('/login')
               }
-              setValue(response.data.token)
-              history.push("/");
-            } else {
-              setValue('')
-              history.push('/login')
-            }
-
-          })
-            .catch( error => {
+            })
+            .catch(error => {
               console.log(error)
               let err = {}
               for (let [key, value] of Object.entries(error.response.data)) {

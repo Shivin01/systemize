@@ -1,21 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import * as Yup from "yup";
-import Modal from "./Modal";
-import {Form, Formik} from "formik";
+import * as Yup from 'yup'
+import Modal from './Modal'
+import {Form, Formik} from 'formik'
 import moment from 'moment-timezone'
 
-import CustomField from "./CustomField";
-import CustomSelectField from "./CustomSelectField";
-import ModalFooter from "./ModalFooter";
-import iziToast from "izitoast";
-import {updateProfile} from "../utils/api";
+import CustomField from './CustomField'
+import CustomSelectField from './CustomSelectField'
+import ModalFooter from './ModalFooter'
+import iziToast from 'izitoast'
+import {updateProfile} from '../utils/api'
 
 function UpdateProfile({setShowModal, showModal, userDetails}) {
   const initialValues = {
     firstName: userDetails.first_name,
     lastName: userDetails.last_name,
-    timezone: userDetails.timezone || null
+    timezone: userDetails.timezone || null,
   }
 
   const onSubmit = (values, {setSubmitting}) => {
@@ -23,7 +23,7 @@ function UpdateProfile({setShowModal, showModal, userDetails}) {
     const data = {
       first_name: values.firstName,
       last_name: values.lastName,
-      timezone: values.timezone
+      timezone: values.timezone,
     }
 
     updateProfile(userDetails.id, data)
@@ -56,7 +56,7 @@ function UpdateProfile({setShowModal, showModal, userDetails}) {
       })}
       onSubmit={onSubmit}
     >
-      {({dirty, isSubmitting,}) => (
+      {({dirty, isSubmitting}) => (
         <Modal
           setShowModal={setShowModal}
           heading="Update Profile"
@@ -66,10 +66,10 @@ function UpdateProfile({setShowModal, showModal, userDetails}) {
           <Form>
             <div className="p-6 overflow-auto">
               <div className="flex flex-wrap -mx-3 mb-6">
-                <CustomField fieldName="firstName" required/>
+                <CustomField fieldName="firstName" required />
               </div>
               <div className="flex flex-wrap -mx-3 mb-6">
-                <CustomField fieldName="lastName" required/>
+                <CustomField fieldName="lastName" required />
               </div>
               <div className="flex flex-wrap -mx-3 mb-6">
                 <CustomSelectField

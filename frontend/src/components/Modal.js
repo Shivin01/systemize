@@ -21,12 +21,7 @@ const customStyles = {
   },
 }
 
-function Modal({
-  setShowModal,
-  showModal = false,
-  heading = null,
-  children,
-}) {
+function Modal({setShowModal, showModal = false, heading = null, children}) {
   return (
     <ReactModal
       isOpen={showModal}

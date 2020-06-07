@@ -1,11 +1,12 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 import {jsx, css} from '@emotion/core'
+import { withRouter } from 'react-router';
+
 import Logo from '../images/Logo.svg'
 import BackgroundShape from '../images/Shape.svg'
 import Image from '../images/image.svg'
 import LoginForm from "./loginForm";
-import { withRouter } from 'react-router';
 
 function Login(props) {
   return (

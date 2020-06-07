@@ -73,14 +73,14 @@ const SignupForm = (history) => (
       }}
     >
       {({
-        values,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting,
-        dirty,
-        /* and other goodies */
-      }) => (
+          values,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+          dirty,
+          /* and other goodies */
+        }) => (
         <form onSubmit={handleSubmit} className="pt-6 pb-8 mb-4">
           <div className="mb-4">
             <label

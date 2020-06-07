@@ -1,39 +1,39 @@
-import React, {useState} from 'react'
-import PropTypes from 'prop-types'
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import React, {useState, useEffect, Fragment} from 'react'
+import {Switch, useLocation} from 'react-router-dom'
 
 import Login from './components/Login'
 import Signup from './components/Signup'
 import Home from './components/Home'
 import NavBar from './components/NavBar'
 import Profile from './components/Profile'
+import PublicRoute from "./components/Route/PublicRoute";
+import PrivateRoute from "./components/Route/PrivateRoute";
 
-function App({loggedIn = true}) {
-  const [active, setActive] = useState(false)
+function App() {
+  const [loggedIn, setLoggedIn] = useState(false)
+  const location = useLocation()
+
+  useEffect(() => {
+    const item = window.localStorage.getItem('token');
+    const token = item ? JSON.parse(item) : null
+    if (token) {
+      setLoggedIn(true)
+    } else {
+      setLoggedIn(false)
+    }
+  }, [location])
 
   return (
-    <Router>
-      {loggedIn && <NavBar active={active} setActive={setActive} />}
+    <Fragment>
+      {loggedIn && <NavBar />}
       <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/signup">
-          <Signup />
-        </Route>
-        <Route path="/profile">
-          <Profile />
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
+        <PublicRoute path='/login' component={Login} />
+        <PublicRoute path='/signup' component={Signup} />
+        <PrivateRoute path='/profile' component={Profile} />
+        <PrivateRoute path='/' component={Home} />
       </Switch>
-    </Router>
+    </Fragment>
   )
-}
-
-App.propTypes = {
-  loggedIn: PropTypes.bool,
 }
 
 export default App

@@ -6,9 +6,10 @@ import {useEffect, useState} from 'react'
 import editSvg from '../images/Vector.svg'
 import personSvg from '../images/person.svg'
 import axiosInstance from "../utils/axiosInsance";
+import UpdateProfile from "./UpdateProfile";
 
 function Profile() {
-  const [, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const [userDetails, setUserDetails] = useState({})
 
   useEffect(() => {
@@ -23,8 +24,6 @@ function Profile() {
       })
 
   }, []);
-
-  console.log(userDetails)
 
   const {
     first_name,
@@ -137,6 +136,13 @@ function Profile() {
           </div>
         </div>
       </div>
+      {showModal ? (
+        <UpdateProfile
+          setShowModal={setShowModal}
+          showModal={showModal}
+          userDetails={userDetails}
+        />
+      ) : null}
     </section>
   )
 }

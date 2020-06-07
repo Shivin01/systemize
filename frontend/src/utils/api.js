@@ -31,3 +31,11 @@ export function updateTask(taskId, data) {
     data,
   })
 }
+
+export function updateProfile(profileId, data) {
+  return axiosInstance({
+    method: 'PATCH',
+    url: `/users/user_profile/${profileId}/`,
+    data,
+  })
+}

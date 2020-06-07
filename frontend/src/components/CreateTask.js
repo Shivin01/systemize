@@ -11,19 +11,19 @@ import '../date-picker.css'
 import Modal from './Modal'
 import CustomField from './CustomField'
 import CustomSelectField from './CustomSelectField'
-import {createTask} from '../utils/api'
+import {createTask, updateTask} from '../utils/api'
 import FormError from './FormError'
 import ModalFooter from "./ModalFooter";
 
-function CreateTask({setShowModal, showModal, isFetchingUser, users}) {
+function CreateTask({task = {}, setShowModal, showModal, isFetchingUser, users}) {
   const initialValues = {
-    name: '',
-    description: '',
-    dueDate: null,
-    status: 1,
-    label: 4,
-    assignedTo: null,
-    priority: 1,
+    name: task.name || '',
+    description: task.description || '',
+    dueDate: task.due_date || null,
+    status: task.status || 1,
+    label: task.label || 4,
+    assignedTo: task.assigned_to || null,
+    priority: task.priority || 1,
   }
 
   const onSubmit = (values, {setSubmitting}) => {
@@ -34,20 +34,37 @@ function CreateTask({setShowModal, showModal, isFetchingUser, users}) {
       assigned_to: values.assignedTo,
     }
 
-    createTask(data)
-      .then(({data}) => {
-        iziToast.success({
-          title: 'OK',
-          message: 'Successfully created a task!',
+    if (task.id) {
+      updateTask(task.id, data)
+        .then(() => {
+          iziToast.success({
+            title: 'OK',
+            message: 'Successfully updated the task!',
+          })
+          setShowModal(false)
         })
-        setShowModal(false)
-      })
-      .catch(() => {
-        iziToast.error({
-          title: 'Error',
-          message: 'Error occurred while saving task',
+        .catch(() => {
+          iziToast.error({
+            title: 'Error',
+            message: 'Error occurred while updating task',
+          })
         })
-      })
+    } else {
+      createTask(data)
+        .then(() => {
+          iziToast.success({
+            title: 'OK',
+            message: 'Successfully created a task!',
+          })
+          setShowModal(false)
+        })
+        .catch(() => {
+          iziToast.error({
+            title: 'Error',
+            message: 'Error occurred while saving task',
+          })
+        })
+    }
   }
 
   const numberNullableField = Yup.number().nullable()
@@ -92,18 +109,13 @@ function CreateTask({setShowModal, showModal, isFetchingUser, users}) {
     >
       {({
           setFieldTouched,
-          handleSubmit,
-          handleReset,
           setFieldValue,
-          errors,
-          values,
-          touched,
           dirty,
           isSubmitting,
         }) => (
         <Modal
           setShowModal={setShowModal}
-          heading="Create Task"
+          heading={task.id ? 'Update Task' : 'Create Task'}
           saveBtnText="Save"
           isSaveBtnDisabled={isSubmitting || !dirty}
           showModal={showModal}

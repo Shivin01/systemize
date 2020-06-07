@@ -3,10 +3,16 @@ import PropTypes from 'prop-types'
 import cs from 'classnames'
 
 import {status, activeTab} from "../constants";
+import CreateTask from "./CreateTask";
+import {useAllUsers} from "../contexts/all-users";
 
-function Task({status, task}) {
+function Task({status, task, setActiveTask}) {
+
   return (
-    <div className="inline-flex p-3 rounded w-full mt-2 items-center justify-between hover:bg-gray-300 cursor-pointer">
+    <div
+      className="inline-flex p-3 rounded w-full mt-2 items-center justify-between hover:bg-gray-300 cursor-pointer"
+      onClick={() => setActiveTask(task)}
+    >
       <div className="bg-blue-900 rounded-full w-10 h-10" />
       <div className="mr-auto ml-4">
         <p className="font-semibold">{task.name}</p>
@@ -22,13 +28,13 @@ Task.propTypes = {
   task: PropTypes.array.isRequired,
 }
 
-function TaskGroup({status, tasks, showStatus = true}) {
+function TaskGroup({status, tasks, showStatus = true, setActiveTask}) {
   return (
     <div className="mt-5">
       {showStatus && <h2 className="uppercase text-gray-700 font-medium">{status}</h2>}
       <div className="mt-3">
         {tasks.map(task => (
-          <Task status={status} task={task} />
+          <Task status={status} task={task} setActiveTask={setActiveTask} />
         ))}
       </div>
     </div>
@@ -47,6 +53,8 @@ function getFilteredTasks(tasks, statusType) {
 
 function UserTasks({tasks}) {
   const [active, setActive] = useState(activeTab.ASSIGNED)
+  const [activeTask, setActiveTask] = useState(null)
+  const {users, isFetching} = useAllUsers()
 
   const newTasks = getFilteredTasks(tasks, status.NEW)
   const inProgressTasks = getFilteredTasks(tasks, status.IN_PROGRESS)
@@ -84,12 +92,21 @@ function UserTasks({tasks}) {
       </ul>
       {active === activeTab.ASSIGNED ? (
           <>
-            <TaskGroup status="In Progress" tasks={inProgressTasks} />
-            <TaskGroup status="New" tasks={newTasks} />
+            <TaskGroup setActiveTask={setActiveTask} status="In Progress" tasks={inProgressTasks} />
+            <TaskGroup setActiveTask={setActiveTask} status="New" tasks={newTasks} />
           </>
       ) : (
-        <TaskGroup showStatus={false} status="Completed" tasks={completedTasks} />
+        <TaskGroup setActiveTask={setActiveTask} showStatus={false} status="Completed" tasks={completedTasks} />
       )}
+      {activeTask ? (
+        <CreateTask
+          task={activeTask}
+          setShowModal={() => setActiveTask(null)}
+          showModal={!!activeTask}
+          users={users}
+          isFetchingUser={isFetching}
+        />
+      ) : null}
     </div>
   )
 }

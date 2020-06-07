@@ -9,7 +9,6 @@ import NavBar from './components/NavBar'
 import Profile from './components/Profile'
 import PublicRoute from './components/Route/PublicRoute'
 import PrivateRoute from './components/Route/PrivateRoute'
-import AllTasks from './components/AllTasks'
 import {UsersProvider} from "./contexts/user";
 
 import 'izitoast/dist/css/iziToast.min.css'
@@ -44,7 +43,6 @@ function App() {
         <PublicRoute path="/login" component={Login} />
         <PublicRoute path="/signup" component={Signup} />
         <PrivateRoute path="/profile" component={Profile} />
-        <PrivateRoute path="/all-tasks" component={AllTasks} />
         <PrivateRoute path="/" component={Home} />
       </Switch>
     </UsersProvider>

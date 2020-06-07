@@ -1,14 +1,14 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 import {jsx} from '@emotion/core'
-import {useEffect, useState} from 'react'
 import {useQuery} from 'react-query'
+import queryString from 'query-string'
 
 import UserTasks from './UserTasks'
 import {getTasksWithParams} from '../utils/api'
 
 function Home() {
-  const {data: response, isFetching, refetch} = useQuery(
+  const {data: response, isFetching} = useQuery(
     ['user-tasks', {}],
     getTasksWithParams,
     {

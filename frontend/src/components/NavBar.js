@@ -2,12 +2,12 @@
 /** @jsxFrag React.Fragment */
 import {css, jsx} from '@emotion/core'
 import {useState, Fragment} from 'react'
-import PropTypes from 'prop-types'
 
 import Logo from '../images/Logo.svg'
 import CreateTask from './CreateTask'
+import {Link, NavLink} from "react-router-dom";
 
-function NavBar({active, setActive}) {
+function NavBar() {
   const [showModal, setShowModal] = useState(false)
 
   return (
@@ -15,29 +15,27 @@ function NavBar({active, setActive}) {
       <div className="w-screen h-auto shadow-xl fixed top-0 left-0 bg-white">
         <div className="container m-auto">
           <nav className="flex items-center justify-between flex-wrap py-4">
-            <a
+            <Link
               className="no-underline pr-8"
-              href="#fdsf"
+              to="/"
               css={css`
                 border-right: 2px solid rgba(0, 0, 0, 0.5);
               `}
             >
               <img src={Logo} alt="logo" />
-            </a>
+            </Link>
             <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto pl-8">
               <div className="lg:flex-grow">
-                <a
-                  href="#responsive-header"
-                  className="inline-block mt-4 lg:mt-0 mr-4"
-                  style={
-                    active
-                      ? {borderBottom: '3px solid #000000', paddingBottom: 3}
-                      : {}
-                  }
-                  onClick={() => setActive(true)}
+                <NavLink
+                  exact
+                  to="/"
+                  activeStyle={{
+                    borderBottom: '3px solid #000000',
+                    paddingBottom: 3
+                  }}
                 >
                   Your Tasks
-                </a>
+                </NavLink>
               </div>
               <div className="mr-4">
                 <button
@@ -64,11 +62,6 @@ function NavBar({active, setActive}) {
       {showModal ? <CreateTask setShowModal={setShowModal} /> : null}
     </Fragment>
   )
-}
-
-NavBar.propTypes = {
-  active: PropTypes.bool.isRequired,
-  setActive: PropTypes.func.isRequired,
 }
 
 export default NavBar

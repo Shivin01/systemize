@@ -6,7 +6,7 @@ from task.serializer import BaseSerializer
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        fields = ('email', 'username', )
+        fields = ('email', 'username', 'id')
 
 
 class OrganizationSerializer(BaseSerializer):

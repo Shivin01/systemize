@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.postgres.fields import JSONField
 
 from task.validators import JSONSchemaValidator
-from user.models import UserProfile, Organization
+from user.models import User, Organization
 
 
 class BaseModel(models.Model):
@@ -51,9 +51,9 @@ class Task(BaseModel):
     due_date = models.DateTimeField(blank=True, null=True)
     status = models.IntegerField(choices=all_status_types, default=NEW)
     label = models.IntegerField(choices=all_label_types, default=OTHERS)
-    assigned_to = models.ForeignKey(UserProfile, on_delete=models.CASCADE, blank=True, null=True)
+    assigned_to = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     priority = models.IntegerField(choices=all_priority_types, default=MEDIUM)
-    created_by = models.ForeignKey(UserProfile,
+    created_by = models.ForeignKey(User,
                                    on_delete=models.CASCADE, related_name='tasks')
     archived = models.BooleanField(default=False)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='tasks', null=True, blank=True)
@@ -98,7 +98,7 @@ class Comment(BaseModel):
     Comment model
     """
     text = models.TextField(max_length=200)
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE,
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
                              related_name='comments')
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='comments')
 

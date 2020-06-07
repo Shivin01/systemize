@@ -2,7 +2,7 @@ from rest_framework import serializers
 from datetime import datetime
 
 from task.models import Task, Comment
-from user.models import UserProfile
+from user.models import User
 
 
 class TimestampField(serializers.DateTimeField):
@@ -49,7 +49,7 @@ class TaskSerializer(BaseSerializer):
         }
 
     def create(self, validated_data):
-        validated_data['created_by'] = UserProfile.objects.get(
+        validated_data['created_by'] = User.objects.get(
             id=self.context['request'].user.id)
         return super(TaskSerializer, self).create(validated_data)
 
@@ -63,6 +63,6 @@ class CommentSerializer(BaseSerializer):
         }
 
     def create(self, validated_data):
-        validated_data['user'] = UserProfile.objects.get(
+        validated_data['user'] = User.objects.get(
             id=self.context['request'].user.id)
         return super(CommentSerializer, self).create(validated_data)

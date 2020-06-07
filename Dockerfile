@@ -19,12 +19,15 @@ RUN set -ex && \
 
 ENV PYTHONUNBUFFERED 1
 
+WORKDIR /systemize
+COPY . .
+COPY ./supervisor-config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+RUN /usr/local/bin/pip3.6 install -r requirements.txt
+
 WORKDIR /systemize/frontend/react_frontend
 RUN npm install
 
 WORKDIR /systemize
-COPY . .
-COPY ./supervisor-config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-RUN /usr/local/bin/pip3.6 install -r ./ImagineAR/requirements.txt
+
 
 CMD ["/usr/bin/supervisord"]

@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  systemize:
+    image: shivinagarwal/hackathon-prac:systemize
+    container_name: systemize
+    environment:
+      DJANGO_SETTINGS_MODULE: 'systemize.settings'
+      PG_DB_NAME: 'postgres'
+    ports:
+      - "8000:8000"
+      - "80:3000"
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=systemize
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"

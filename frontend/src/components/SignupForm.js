@@ -7,6 +7,9 @@ import axios from 'axios'
 import FormError from './FormError'
 import useLocalStorage from "../hooks/useLocalStorage";
 import {useUsers} from "../contexts/user";
+import axiosInstance from "../utils/axiosInsance";
+import {updateProfile} from "../utils/api";
+import iziToast from "izitoast";
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
@@ -53,6 +56,8 @@ const SignupForm = ({history}) => {
               username: values.username,
               password1: values.password,
               password2: values.confirmPassword,
+              first_name: values.firstName,
+              last_name: values.lastName
             })
             .then(response => {
               if (getIn(response, 'data.token')) {
@@ -60,6 +65,32 @@ const SignupForm = ({history}) => {
                   setUserDetails(response.data.user)
                 }
                 setValue(response.data.token)
+                axiosInstance
+                  .get('/users/user_profile/')
+                  .then(function (response) {
+                    if (response.data && response.data.length) {
+                      let pdata = {
+                        first_name: values.firstName,
+                        last_name: values.lastName
+                      }
+                      updateProfile(response.data.id, pdata)
+                        .then((response) => {
+                          iziToast.success({
+                            title: 'OK',
+                            message: 'Successfully signedup!',
+                          })
+                        })
+                        .catch(() => {
+                          iziToast.error({
+                            title: 'Error',
+                            message: 'Error occurred while signing up!',
+                          })
+                        })
+                    }
+                  })
+                  .catch(function (error) {
+                    console.log(error)
+                  })
                 history.push('/')
               } else {
                 setValue('')
@@ -67,7 +98,7 @@ const SignupForm = ({history}) => {
               }
             })
             .catch(error => {
-              console.log(error)
+              console.log(error);
               let err = {}
               for (let [key, value] of Object.entries(error.response.data)) {
                 let err1 = {}

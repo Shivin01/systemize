@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useQuery} from 'react-query'
 
 import {getUsersWithParams} from '../utils/api'
@@ -7,15 +7,26 @@ const UserContext = React.createContext({users: []})
 UserContext.displayName = 'AuthContext'
 
 export function AllUsersProvider(props) {
-  const {data: response, isFetching} = useQuery(
+  const {data: response, isFetching, refetch} = useQuery(
     ['organization-users', {}],
     getUsersWithParams,
     {
+      manual: true,
       refetchInterval: false,
       retry: false,
       refetchOnWindowFocus: false,
     },
   )
+
+  function fetchData() {
+    setTimeout(() => {
+      refetch()
+    }, 3000)
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   const users = response && response.data ? response.data : []
 

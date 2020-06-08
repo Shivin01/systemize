@@ -1,10 +1,13 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import cs from 'classnames'
+import moment from 'moment'
 
 import {status, activeTab} from '../constants'
 import CreateTask from './CreateTask'
 import {useAllUsers} from '../contexts/all-users'
+window.moment = moment
+
 
 function Task({status, task, setActiveTask}) {
   return (
@@ -15,7 +18,7 @@ function Task({status, task, setActiveTask}) {
       <div className="bg-blue-900 rounded-full w-10 h-10" />
       <div className="mr-auto ml-4">
         <p className="font-semibold">{task.name}</p>
-        <span className="text-xs font-light">Due date: {task.due_date}</span>
+        <span className="text-xs font-light">Due date: {task.due_date ? moment(+task.due_date).format("LL") : 'None'}</span>
       </div>
       <span className="inline-block mr-2">{status}</span>
     </div>

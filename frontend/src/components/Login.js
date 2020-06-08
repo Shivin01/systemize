@@ -1,7 +1,7 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 import {jsx, css} from '@emotion/core'
-import {withRouter} from 'react-router'
+import {withRouter, NavLink} from 'react-router-dom'
 
 import Logo from '../images/Logo.svg'
 import BackgroundShape from '../images/Shape.svg'
@@ -15,15 +15,16 @@ function Login(props) {
         <div className="flex">
           <div className="w-1/2 h-auto rounded-tl-lg rounded-bl-lg p-8">
             <div className="flex justify-between items-center">
-              <a className="no-underline" href="#fsdf">
-                <img src={Logo} alt="logo" />
-              </a>
+              <img src={Logo} alt="logo" />
               <nav>
                 <ul className="list-none">
                   <li className="inline-block py-0 px-5">
-                    <a
+                    <NavLink
+                      to='/login'
                       className="font-bold"
-                      href="#fdsf"
+                      activeStyle={{
+                        color: "#0088a9"
+                      }}
                       css={css`
                         transition: all 0.3s ease 0s;
                         &:hover {
@@ -32,12 +33,15 @@ function Login(props) {
                       `}
                     >
                       Signin
-                    </a>
+                    </NavLink>
                   </li>
                   <li className="inline-block py-0 px-5">
-                    <a
+                    <NavLink
+                      to='/signup'
                       className="font-bold"
-                      href="#sdfdsf"
+                      activeStyle={{
+                        color: "#0088a9"
+                      }}
                       css={css`
                         transition: all 0.3s ease 0s;
                         &:hover {
@@ -46,7 +50,7 @@ function Login(props) {
                       `}
                     >
                       Signup
-                    </a>
+                    </NavLink>
                   </li>
                 </ul>
               </nav>

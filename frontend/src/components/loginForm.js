@@ -15,7 +15,7 @@ const loginSchema = Yup.object().shape({
 
 const LoginForm = ({history}) => {
   const [, setValue] = useLocalStorage('token', '')
-  const {userDetails, setUserDetails} = useUsers()
+  const {setUserDetails} = useUsers()
 
   return (
     <div>
@@ -42,11 +42,8 @@ const LoginForm = ({history}) => {
               password: values.password,
             })
             .then(response => {
-              console.log(response.data)
               if (getIn(response, 'data.token')) {
-                console.log(response.data.token)
                 if (getIn(response, 'data.user')) {
-                  console.log(response.data.user)
                   setUserDetails(response.data.user)
                 }
                 setValue(response.data.token)
@@ -57,7 +54,6 @@ const LoginForm = ({history}) => {
               }
             })
             .catch(error => {
-              console.log(error)
               let err = {}
               for (let [key, value] of Object.entries(error.response.data)) {
                 if (key === 'non_field_errors') {

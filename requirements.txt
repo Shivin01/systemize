@@ -18,7 +18,7 @@ jsonschema==3.2.0
 oauthlib==3.1.0
 Pillow==7.1.2
 psycopg2==2.8.5
-Pygments==2.6.1
+Pygments==2.7.4
 PyJWT==1.7.1
 pyrsistent==0.16.0
 python3-openid==3.1.0
